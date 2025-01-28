@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Image,
@@ -12,13 +12,13 @@ import {
   Title1,
   makeStyles,
   tokens,
-} from '@fluentui/react-components'
-import { useDarkMode } from '../hooks/darkMode'
-import MirrorCamera from './MirrorCamera'
+} from '@fluentui/react-components';
+import useDarkMode from '../hooks/useDarkMode';
+import MirrorCamera from './MirrorCamera';
 
-import ClownEmoji from '/clown.svg'
-import { ChangeEvent, useState } from 'react'
-import MirrorImage from './MirrorImage'
+import ClownEmoji from '/clown.svg';
+import { ChangeEvent, useState } from 'react';
+import MirrorImage from './MirrorImage';
 
 const useStyles = makeStyles({
   frame: {
@@ -87,33 +87,33 @@ const useStyles = makeStyles({
     flexWrap: 'wrap',
     padding: `${tokens.spacingVerticalNone} ${tokens.spacingHorizontalL}`,
   },
-})
+});
 
 interface Roast {
-  image: string
-  text: string
+  image: string;
+  text: string;
 }
 
 const Mirror = () => {
-  const styles = useStyles()
-  const { isDark, onDarkModeToggled } = useDarkMode()
-  const [roast, setRoast] = useState<Roast | null>(null)
+  const styles = useStyles();
+  const { isDark, onDarkModeToggled } = useDarkMode();
+  const [roast, setRoast] = useState<Roast | null>(null);
 
   const handleDarkModeToggled = (
     _event: ChangeEvent<HTMLInputElement>,
     data: SwitchOnChangeData
   ) => {
-    onDarkModeToggled(data.checked)
-  }
+    onDarkModeToggled(data.checked);
+  };
 
   const onImageChanged = (newImage: string) => {
-    // Send request to backend to get roast
+    // TODO: Send request to backend to create a roast
 
     setRoast({
       image: newImage,
       text: 'You look like a clown',
-    })
-  }
+    });
+  };
 
   return (
     <div className={styles.frame}>
@@ -161,7 +161,7 @@ const Mirror = () => {
         </CardFooter>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Mirror
+export default Mirror;

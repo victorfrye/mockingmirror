@@ -10,6 +10,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\" />
-	<Folder Include="src\hooks\" />
   </ItemGroup>
 </Project>

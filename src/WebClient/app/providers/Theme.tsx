@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   FluentProvider,
@@ -6,9 +6,9 @@ import {
   tokens,
   webDarkTheme,
   webLightTheme,
-} from '@fluentui/react-components'
-import { useDarkMode } from './darkMode'
-import * as React from 'react'
+} from '@fluentui/react-components';
+import useDarkMode from '../hooks/useDarkMode';
+import * as React from 'react';
 
 const useStaticStyles = makeStaticStyles({
   html: {
@@ -45,21 +45,21 @@ const useStaticStyles = makeStaticStyles({
     marginInlineEnd: 0,
     paddingInlineStart: 0,
   },
-})
+});
 
 const ThemeProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
-  useStaticStyles()
-  const { isDark } = useDarkMode()
+  useStaticStyles();
+  const { isDark } = useDarkMode();
 
   return (
     <FluentProvider theme={isDark ? webDarkTheme : webLightTheme}>
       {children}
     </FluentProvider>
-  )
-}
+  );
+};
 
-export default ThemeProvider
+export default ThemeProvider;
 
-export { ThemeProvider }
+export { ThemeProvider };

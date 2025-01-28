@@ -4,9 +4,9 @@ import {
   CardFooter,
   Image,
   makeStyles,
-} from '@fluentui/react-components'
-import { Camera16Regular } from '@fluentui/react-icons'
-import { useEffect, FC, useRef } from 'react'
+} from '@fluentui/react-components';
+import { Camera16Regular } from '@fluentui/react-icons';
+import { useEffect, FC, useRef } from 'react';
 
 const useStyles = makeStyles({
   card: {
@@ -30,36 +30,36 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyItems: 'center',
   },
-})
+});
 
 interface MirrorCameraProps {
-  handleImageChanged: (src: string) => void
+  handleImageChanged: (src: string) => void;
 }
 
 const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
-  const styles = useStyles()
-  const video = useRef<HTMLVideoElement | null>(null)
-  const canvas = useRef<HTMLCanvasElement | null>(null)
+  const styles = useStyles();
+  const video = useRef<HTMLVideoElement | null>(null);
+  const canvas = useRef<HTMLCanvasElement | null>(null);
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
       if (video.current) {
-        video.current.srcObject = stream
-        video.current.play()
+        video.current.srcObject = stream;
+        video.current.play();
       }
     } catch (error) {
-      console.error('Error accessing the camera: ', error)
+      console.error('Error accessing the camera: ', error);
     }
-  }
+  };
 
   const takeSnapshot = () => {
     if (canvas.current && video.current) {
-      const context = canvas.current.getContext('2d')
+      const context = canvas.current.getContext('2d');
 
-      canvas.current.width = video.current.videoWidth
-      canvas.current.height = video.current.videoHeight
+      canvas.current.width = video.current.videoWidth;
+      canvas.current.height = video.current.videoHeight;
 
       if (context) {
         context.drawImage(
@@ -68,26 +68,26 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
           0,
           canvas.current.width,
           canvas.current.height
-        )
-        const dataUrl = canvas.current.toDataURL('image/png')
+        );
+        const dataUrl = canvas.current.toDataURL('image/png');
 
-        handleImageChanged(dataUrl)
+        handleImageChanged(dataUrl);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    startCamera()
+    startCamera();
 
     return () => {
       if (video.current && video.current.srcObject) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        const stream = video.current.srcObject as MediaStream
+        const stream = video.current.srcObject as MediaStream;
 
-        stream.getTracks().forEach((track) => track.stop())
+        stream.getTracks().forEach((track) => track.stop());
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <Card className={styles.card} appearance="filled-alternative">
@@ -116,7 +116,7 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
         }
       ></CardFooter>
     </Card>
-  )
-}
+  );
+};
 
-export default MirrorCamera
+export default MirrorCamera;

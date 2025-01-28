@@ -4,8 +4,8 @@ import {
   CardFooter,
   Image,
   makeStyles,
-} from '@fluentui/react-components'
-import { FC } from 'react'
+} from '@fluentui/react-components';
+import { FC } from 'react';
 
 const useStyles = makeStyles({
   card: {
@@ -20,15 +20,15 @@ const useStyles = makeStyles({
     width: 'auto',
     height: 'auto',
   },
-})
+});
 
 interface MirrorImageProps {
-  image: string
-  text: string
+  image: string;
+  text: string;
 }
 
 const MirrorImage: FC<MirrorImageProps> = ({ image, text }) => {
-  const styles = useStyles()
+  const styles = useStyles();
 
   return (
     <Card className={styles.card} appearance="filled-alternative">
@@ -45,7 +45,7 @@ const MirrorImage: FC<MirrorImageProps> = ({ image, text }) => {
         <Body1>{text}</Body1>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
-export default MirrorImage
+export default MirrorImage;

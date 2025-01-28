@@ -1,26 +1,25 @@
-'use client'
+'use client';
 
 import {
   createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
-} from 'react'
-import { useMediaQuery } from 'react-responsive'
+} from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 const DarkModeContext = createContext({
   isDark: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onDarkModeToggled: (_isDark: boolean) => {},
-})
-DarkModeContext.displayName = 'DarkModeContext'
+});
+DarkModeContext.displayName = 'DarkModeContext';
 
 const DarkModeProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(true);
 
   const systemPrefersLight = useMediaQuery(
     {
@@ -28,11 +27,11 @@ const DarkModeProvider = ({
     },
     undefined,
     (isSystemLight) => setIsDark(!isSystemLight)
-  )
+  );
 
   const onDarkModeToggled = useCallback((isDark: boolean) => {
-    setIsDark(isDark)
-  }, [])
+    setIsDark(isDark);
+  }, []);
 
   const darkMode = useMemo(
     () => ({
@@ -40,23 +39,21 @@ const DarkModeProvider = ({
       onDarkModeToggled,
     }),
     [isDark, onDarkModeToggled]
-  )
+  );
 
   useEffect(() => {
     if (systemPrefersLight) {
-      setIsDark(false)
+      setIsDark(false);
     }
-  }, [systemPrefersLight])
+  }, [systemPrefersLight]);
 
   return (
     <DarkModeContext.Provider value={darkMode}>
       {children}
     </DarkModeContext.Provider>
-  )
-}
+  );
+};
 
-const useDarkMode = () => useContext(DarkModeContext)
+export default DarkModeProvider;
 
-export default DarkModeProvider
-
-export { DarkModeProvider, useDarkMode }
+export { DarkModeProvider, DarkModeContext };
