@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   Image,
@@ -12,11 +12,13 @@ import {
   Title1,
   makeStyles,
   tokens,
-} from '@fluentui/react-components';
-import { useDarkMode } from '../hooks/darkMode';
-import CameraCapture from './CameraCapture';
+} from '@fluentui/react-components'
+import { useDarkMode } from '../hooks/darkMode'
+import MirrorCamera from './MirrorCamera'
 
-import ClownEmoji from '/clown.svg';
+import ClownEmoji from '/clown.svg'
+import { ChangeEvent, useState } from 'react'
+import MirrorImage from './MirrorImage'
 
 const useStyles = makeStyles({
   frame: {
@@ -45,6 +47,15 @@ const useStyles = makeStyles({
   tagline: {
     color: tokens.colorBrandForeground2,
     margin: `${tokens.spacingVerticalNone} ${tokens.spacingHorizontalSNudge}`,
+  },
+  mirrorContainer: {
+    display: 'flex',
+    gap: tokens.spacingVerticalXL,
+    margin: `${tokens.spacingVerticalXL} ${tokens.spacingVerticalNone}`,
+    flexDirection: 'column',
+    '@media screen and (min-width: 900px)': {
+      flexDirection: 'row',
+    },
   },
   footer: {
     display: 'flex',
@@ -75,20 +86,34 @@ const useStyles = makeStyles({
     },
     flexWrap: 'wrap',
     padding: `${tokens.spacingVerticalNone} ${tokens.spacingHorizontalL}`,
-
   },
-});
+})
+
+interface Roast {
+  image: string
+  text: string
+}
 
 const Mirror = () => {
-  const styles = useStyles();
-  const { isDark, onDarkModeToggled } = useDarkMode();
+  const styles = useStyles()
+  const { isDark, onDarkModeToggled } = useDarkMode()
+  const [roast, setRoast] = useState<Roast | null>(null)
 
   const handleDarkModeToggled = (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    data: SwitchOnChangeData,
+    _event: ChangeEvent<HTMLInputElement>,
+    data: SwitchOnChangeData
   ) => {
-    onDarkModeToggled(data.checked);
-  };
+    onDarkModeToggled(data.checked)
+  }
+
+  const onImageChanged = (newImage: string) => {
+    // Send request to backend to get roast
+
+    setRoast({
+      image: newImage,
+      text: 'You look like a clown',
+    })
+  }
 
   return (
     <div className={styles.frame}>
@@ -98,24 +123,28 @@ const Mirror = () => {
           image={
             <Image
               src={ClownEmoji}
-              alt='a headstone for that which is dead'
+              alt="a headstone for that which is dead"
               height={72}
               width={72}
             />
           }
           header={
-            <Title1 as='h1' wrap={false} className={styles.title}>
+            <Title1 as="h1" wrap={false} className={styles.title}>
               Mocking Mirror
             </Title1>
           }
           description={
-            <Subtitle2 as='em' className={styles.tagline}>
+            <Subtitle2 as="em" className={styles.tagline}>
               An AI-as-a-service demo application by Victor Frye
             </Subtitle2>
           }
         />
 
-        <CameraCapture />
+        <div className={styles.mirrorContainer}>
+          <MirrorCamera handleImageChanged={onImageChanged} />
+
+          {roast && <MirrorImage image={roast.image} text={roast.text} />}
+        </div>
 
         <CardFooter className={styles.footer}>
           {/* <Socials /> */}
@@ -126,13 +155,13 @@ const Mirror = () => {
             className={styles.switch}
           />
 
-          <Caption1 as='p' align='end' block className={styles.copyright}>
+          <Caption1 as="p" align="end" block className={styles.copyright}>
             © Victor Frye {new Date().getFullYear()}
           </Caption1>
         </CardFooter>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Mirror;
+export default Mirror

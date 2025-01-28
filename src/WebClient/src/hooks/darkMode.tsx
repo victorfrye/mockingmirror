@@ -1,62 +1,62 @@
-'use client';
+'use client'
 
 import {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from 'react';
-import { useMediaQuery } from 'react-responsive';
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { useMediaQuery } from 'react-responsive'
 
 const DarkModeContext = createContext({
-    isDark: true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    onDarkModeToggled: (_isDark: boolean) => { },
-});
-DarkModeContext.displayName = 'DarkModeContext';
+  isDark: true,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onDarkModeToggled: (_isDark: boolean) => {},
+})
+DarkModeContext.displayName = 'DarkModeContext'
 
 const DarkModeProvider = ({
-    children,
+  children,
 }: Readonly<{ children: React.ReactNode }>) => {
-    const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(true)
 
-    const systemPrefersLight = useMediaQuery(
-        {
-            query: '(prefers-color-scheme: light)',
-        },
-        undefined,
-        (isSystemLight) => setIsDark(!isSystemLight),
-    );
+  const systemPrefersLight = useMediaQuery(
+    {
+      query: '(prefers-color-scheme: light)',
+    },
+    undefined,
+    (isSystemLight) => setIsDark(!isSystemLight)
+  )
 
-    const onDarkModeToggled = useCallback((isDark: boolean) => {
-        setIsDark(isDark);
-    }, []);
+  const onDarkModeToggled = useCallback((isDark: boolean) => {
+    setIsDark(isDark)
+  }, [])
 
-    const darkMode = useMemo(
-        () => ({
-            isDark,
-            onDarkModeToggled,
-        }),
-        [isDark, onDarkModeToggled],
-    );
+  const darkMode = useMemo(
+    () => ({
+      isDark,
+      onDarkModeToggled,
+    }),
+    [isDark, onDarkModeToggled]
+  )
 
-    useEffect(() => {
-        if (systemPrefersLight) {
-            setIsDark(false);
-        }
-    }, [systemPrefersLight]);
+  useEffect(() => {
+    if (systemPrefersLight) {
+      setIsDark(false)
+    }
+  }, [systemPrefersLight])
 
-    return (
-        <DarkModeContext.Provider value={darkMode}>
-            {children}
-        </DarkModeContext.Provider>
-    );
-};
+  return (
+    <DarkModeContext.Provider value={darkMode}>
+      {children}
+    </DarkModeContext.Provider>
+  )
+}
 
-const useDarkMode = () => useContext(DarkModeContext);
+const useDarkMode = () => useContext(DarkModeContext)
 
-export default DarkModeProvider;
+export default DarkModeProvider
 
-export { DarkModeProvider, useDarkMode };
+export { DarkModeProvider, useDarkMode }

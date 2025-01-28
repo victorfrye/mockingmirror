@@ -15,7 +15,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@victorfrye/demo/*": ["./src/*"]
+      "@mockingmirror/*": ["./src/*"]
     },
 
     /* Linting */

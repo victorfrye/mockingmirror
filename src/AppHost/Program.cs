@@ -1,5 +1,12 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.WebApi>("webapi");
+var api = builder.AddProject<Projects.WebApi>("WebApi")
+    .WithExternalHttpEndpoints();
 
-builder.Build().Run();
+builder.AddNpmApp("WebClient", "../WebClient")
+    .WithReference(api)
+    .WaitFor(api)
+    .WithHttpEndpoint(env: "VITE_PORT")
+    .WithExternalHttpEndpoints();
+
+await builder.Build().RunAsync();

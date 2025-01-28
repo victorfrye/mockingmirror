@@ -1,6 +1,6 @@
-import DarkModeProvider from './hooks/darkMode';
-import ThemeProvider from './hooks/theme';
-import Mirror from './components/Mirror';
+import DarkModeProvider from './hooks/darkMode'
+import ThemeProvider from './hooks/theme'
+import Mirror from './components/Mirror'
 
 const App = () => {
   return (

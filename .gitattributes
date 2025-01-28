@@ -8,6 +8,8 @@
 *.csproj text eol=crlf
 *.esproj text eol=crlf
 
+* 			  eol=lf
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
