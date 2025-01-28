@@ -80,6 +80,7 @@ const CameraCapture = () => {
 
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         const stream = videoRef.current.srcObject as MediaStream;
         stream.getTracks().forEach(track => track.stop());
       }

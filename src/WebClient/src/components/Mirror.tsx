@@ -16,8 +16,7 @@ import {
 import { useDarkMode } from '../hooks/darkMode';
 import CameraCapture from './CameraCapture';
 
-// import reactLogo from './assets/react.svg'
-import ClownEmoji from '../assets/clown.svg';
+import ClownEmoji from '/clown.svg';
 
 const useStyles = makeStyles({
   frame: {
@@ -85,7 +84,7 @@ const Mirror = () => {
   const { isDark, onDarkModeToggled } = useDarkMode();
 
   const handleDarkModeToggled = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    _event: React.ChangeEvent<HTMLInputElement>,
     data: SwitchOnChangeData,
   ) => {
     onDarkModeToggled(data.checked);

@@ -13,7 +13,7 @@ import { useMediaQuery } from 'react-responsive';
 const DarkModeContext = createContext({
     isDark: true,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    onDarkModeToggled: (isDark: boolean) => { },
+    onDarkModeToggled: (_isDark: boolean) => { },
 });
 DarkModeContext.displayName = 'DarkModeContext';
 
