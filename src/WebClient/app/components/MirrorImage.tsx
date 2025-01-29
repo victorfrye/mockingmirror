@@ -60,7 +60,9 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
     [image]
   );
 
-  const { response, loading } = useAxios<RoastResponse>(request);
+  const { response, error, loading } = useAxios<RoastRequest, RoastResponse>(
+    request
+  );
 
   useEffect(() => {
     if (response !== null) {
@@ -86,7 +88,11 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
           />
 
           <CardFooter>
-            <Body1>{roast?.text}</Body1>
+            <Body1 as="p">
+              {error
+                ? 'Hmmm. Something went wrong and it is probably your fault.'
+                : roast?.text}
+            </Body1>
           </CardFooter>
         </>
       )}
