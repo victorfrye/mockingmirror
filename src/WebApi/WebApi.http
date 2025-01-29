@@ -1,0 +1,18 @@
+@WebApi_HostAddress = http://localhost:5170
+
+POST {{WebApi_HostAddress}}/roasts
+Accept: application/json
+Content-Type: application/json
+
+{
+  "imageBytes": "base64-encoded-image-bytes"
+}
+
+###
+
+OPTIONS {{WebApi_HostAddress}}/roasts
+Accept: */*
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: content-type
+
+###
