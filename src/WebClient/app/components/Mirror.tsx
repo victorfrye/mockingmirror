@@ -110,6 +110,7 @@ const Mirror = () => {
           className={styles.header}
           image={
             <Image
+              as="img"
               src={ClownEmoji}
               alt="a headstone for that which is dead"
               height={72}
@@ -135,7 +136,6 @@ const Mirror = () => {
         </div>
 
         <CardFooter className={styles.footer}>
-          {/* <Socials /> */}
           <Switch
             checked={isDark}
             onChange={handleDarkModeToggled}

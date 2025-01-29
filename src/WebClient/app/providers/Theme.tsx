@@ -1,5 +1,3 @@
-'use client';
-
 import {
   FluentProvider,
   makeStaticStyles,

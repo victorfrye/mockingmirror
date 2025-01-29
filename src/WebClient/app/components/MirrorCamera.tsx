@@ -107,9 +107,11 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
         className={styles.footer}
         action={
           <Button
+            as="button"
             className={styles.button}
             icon={<Camera16Regular />}
             onClick={takeSnapshot}
+            appearance="primary"
           >
             Capture Image
           </Button>
