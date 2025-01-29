@@ -4,8 +4,11 @@ import {
   CardFooter,
   Image,
   makeStyles,
+  Spinner,
 } from '@fluentui/react-components';
-import { FC } from 'react';
+import useAxios from '@mockingmirror/hooks/useAxios';
+import { AxiosRequestConfig } from 'axios';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 const useStyles = makeStyles({
   card: {
@@ -22,28 +25,71 @@ const useStyles = makeStyles({
   },
 });
 
-interface MirrorImageProps {
-  image: string;
+interface Roast {
   text: string;
 }
 
-const MirrorImage: FC<MirrorImageProps> = ({ image, text }) => {
+interface RoastRequest {
+  imageBytes: string;
+}
+
+interface RoastResponse {
+  textBody: string;
+  prompt: string | null;
+}
+
+interface MirrorImageProps {
+  image: string;
+}
+
+const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
   const styles = useStyles();
+  const [roast, setRoast] = useState<Roast | null>(null);
+  const request: AxiosRequestConfig<RoastRequest> = useMemo(
+    () => ({
+      method: 'post',
+      url: '/roasts',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      data: {
+        imageBytes: image.split('base64,').pop(),
+      } as RoastRequest,
+    }),
+    [image]
+  );
+
+  const { response, loading } = useAxios<RoastResponse>(request);
+
+  useEffect(() => {
+    if (response !== null) {
+      setRoast({
+        text: response.textBody,
+      });
+    }
+  }, [response]);
 
   return (
     <Card className={styles.card} appearance="filled-alternative">
-      <Image
-        as="img"
-        src={image}
-        alt="Captured"
-        shadow
-        shape="rounded"
-        className={styles.image}
-      />
+      {loading ? (
+        <Spinner label={'Roasting...'} size="extra-large" />
+      ) : (
+        <>
+          <Image
+            as="img"
+            src={image}
+            alt="Captured"
+            shadow
+            shape="rounded"
+            className={styles.image}
+          />
 
-      <CardFooter>
-        <Body1>{text}</Body1>
-      </CardFooter>
+          <CardFooter>
+            <Body1>{roast?.text}</Body1>
+          </CardFooter>
+        </>
+      )}
     </Card>
   );
 };

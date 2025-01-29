@@ -13,12 +13,12 @@ import {
   makeStyles,
   tokens,
 } from '@fluentui/react-components';
-import useDarkMode from '../hooks/useDarkMode';
-import MirrorCamera from './MirrorCamera';
+import useDarkMode from '@mockingmirror/hooks/useDarkMode';
+import MirrorCamera from '@mockingmirror/components/MirrorCamera';
 
 import ClownEmoji from '/clown.svg';
 import { ChangeEvent, useState } from 'react';
-import MirrorImage from './MirrorImage';
+import MirrorImage from '@mockingmirror/components/MirrorImage';
 
 const useStyles = makeStyles({
   frame: {
@@ -89,15 +89,10 @@ const useStyles = makeStyles({
   },
 });
 
-interface Roast {
-  image: string;
-  text: string;
-}
-
 const Mirror = () => {
   const styles = useStyles();
   const { isDark, onDarkModeToggled } = useDarkMode();
-  const [roast, setRoast] = useState<Roast | null>(null);
+  const [image, setImage] = useState<string | null>(null);
 
   const handleDarkModeToggled = (
     _event: ChangeEvent<HTMLInputElement>,
@@ -106,14 +101,7 @@ const Mirror = () => {
     onDarkModeToggled(data.checked);
   };
 
-  const onImageChanged = (newImage: string) => {
-    // TODO: Send request to backend to create a roast
-
-    setRoast({
-      image: newImage,
-      text: 'You look like a clown',
-    });
-  };
+  const onImageChanged = (newImage: string) => setImage(newImage);
 
   return (
     <div className={styles.frame}>
@@ -143,7 +131,7 @@ const Mirror = () => {
         <div className={styles.mirrorContainer}>
           <MirrorCamera handleImageChanged={onImageChanged} />
 
-          {roast && <MirrorImage image={roast.image} text={roast.text} />}
+          {image && <MirrorImage image={image} />}
         </div>
 
         <CardFooter className={styles.footer}>

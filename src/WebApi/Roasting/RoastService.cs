@@ -2,7 +2,7 @@ using VictorFrye.MockingMirror.WebApi.OpenAI;
 
 namespace VictorFrye.MockingMirror.WebApi.Roasting;
 
-internal class RoastService(OpenAIService openAIService) : IRoastService
+internal class RoastService(IOpenAIService openAIService) : IRoastService
 {
     private const string prompt =
     """
@@ -12,15 +12,15 @@ internal class RoastService(OpenAIService openAIService) : IRoastService
         Here is the picture they provided:
         """;
 
-    private readonly OpenAIService _openAIService = openAIService;
+    private readonly IOpenAIService _openAIService = openAIService;
 
     public async Task<RoastResponse> AddRoast(RoastRequest request)
     {
-        var completion = await _openAIService.GetCompletion(prompt, request.ImageBytes);
+        // var completion = await _openAIService.GetCompletion(prompt, request.ImageBytes);
 
         return new RoastResponse()
         {
-            TextBody = completion,
+            TextBody = "You are a clown!!! Hahahahaha.",
             Prompt = prompt,
         };
     }

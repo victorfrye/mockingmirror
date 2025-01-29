@@ -3,12 +3,12 @@
 ###############################################################################
 * text=auto
 
+* 			  eol=lf
+
 *.cs     text eol=crlf
 *.sln    text eol=crlf
 *.csproj text eol=crlf
 *.esproj text eol=crlf
-
-* 			  eol=lf
 
 ###############################################################################
 # Set default behavior for command prompt diff.

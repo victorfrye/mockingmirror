@@ -9,12 +9,10 @@ internal static class RoastEndpoints
 
     private static void MapPostRoastEndpoint(this WebApplication app)
     {
-        app.MapPost("/api/roasts", async (IRoastService service, RoastRequest request) =>
+        app.MapPost("/roasts", async (IRoastService service, RoastRequest request) =>
         {
             var response = await service.AddRoast(request);
-            return Results.Created($"/api/roasts/{response.Id}", response);
+            return Results.Created($"/roasts/{response.Id}", response);
         });
     }
-
-
 }

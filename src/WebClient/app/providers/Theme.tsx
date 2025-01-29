@@ -7,7 +7,7 @@ import {
   webDarkTheme,
   webLightTheme,
 } from '@fluentui/react-components';
-import useDarkMode from '../hooks/useDarkMode';
+import useDarkMode from '@mockingmirror/hooks/useDarkMode';
 import * as React from 'react';
 
 const useStaticStyles = makeStaticStyles({

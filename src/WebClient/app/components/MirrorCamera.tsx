@@ -80,7 +80,7 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
     startCamera();
 
     return () => {
-      if (video.current && video.current.srcObject) {
+      if (video.current?.srcObject) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         const stream = video.current.srcObject as MediaStream;
 

@@ -8,14 +8,19 @@ using VictorFrye.MockingMirror.WebApi.Roasting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(static options =>
+    options.AddDefaultPolicy(static policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()));
+
 builder.AddServiceDefaults();
 
 var config = builder.Configuration;
 
 builder.Services.AddOptions<OpenAIServiceOptions>()
-                .Bind(builder.Configuration.GetSection(OpenAIServiceOptions.ConfigurationSectionName))
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+                .Bind(builder.Configuration.GetSection(OpenAIServiceOptions.ConfigurationSectionName));
+                //.ValidateDataAnnotations();
+                // .ValidateOnStart();
 
 builder.Services.AddScoped<IOpenAIService, OpenAIService>()
                 .AddScoped<IRoastService, RoastService>();
@@ -33,7 +38,7 @@ builder.Services.AddOpenApi(static options =>
     {
         document.Info = new()
         {
-            Title = "Victor Frye AIaaS Demo API",
+            Title = "Mocking Mirror API",
             Version = "v1",
             Description = "Web API for roasting people with Azure AIaaS."
         };
@@ -48,8 +53,6 @@ builder.Services.AddOpenApi(static options =>
     });
 });
 
-
-
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
@@ -59,6 +62,9 @@ app.MapOpenApi()
 app.MapRoastingEndpoints();
 
 app.UseHttpsRedirection();
+
+app.UseCors();
+
 app.UseAuthorization();
 
 await app.RunAsync();
