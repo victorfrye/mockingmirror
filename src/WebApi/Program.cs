@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using VictorFrye.MockingMirror.Extensions.ServiceDefaults;
 using VictorFrye.MockingMirror.WebApi.OpenAI;
 using VictorFrye.MockingMirror.WebApi.Roasting;
+using VictorFrye.MockingMirror.WebApi.Speech;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +20,12 @@ var config = builder.Configuration;
 
 builder.Services.AddOptions<OpenAIServiceOptions>()
                 .Bind(builder.Configuration.GetSection(OpenAIServiceOptions.ConfigurationSectionName));
-//.ValidateDataAnnotations();
-// .ValidateOnStart();
+
+builder.Services.AddOptions<SpeechServiceOptions>()
+                .Bind(builder.Configuration.GetSection(SpeechServiceOptions.ConfigurationSectionName));
 
 builder.Services.AddScoped<IOpenAIService, OpenAIService>()
+                .AddScoped<ISpeechService, SpeechService>()
                 .AddScoped<IRoastService, RoastService>();
 
 builder.Services.AddControllers()
@@ -40,7 +43,7 @@ builder.Services.AddOpenApi(static options =>
         {
             Title = "Mocking Mirror API",
             Version = "v1",
-            Description = "Web API for roasting people with Azure AIaaS."
+            Description = "Web API for roasting people with Azure AI services."
         };
         return Task.CompletedTask;
     });

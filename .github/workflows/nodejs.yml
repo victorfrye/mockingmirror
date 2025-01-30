@@ -40,6 +40,6 @@ jobs:
     - name: Verify formatting
       run: npm run lint:check
 
-    - name: Build solution
+    - name: Build project
       run: npm run build
     

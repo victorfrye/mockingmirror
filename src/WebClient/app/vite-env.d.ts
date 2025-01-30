@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_API_HTTPS_BASEURL: string;
-  // more env variables...
+  readonly VITE_API_BASEURL: string;
 }
 
 interface ImportMeta {
