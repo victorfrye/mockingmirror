@@ -8,7 +8,7 @@
     <IsAspireSharedProject>true</IsAspireSharedProject>
 
     <AssemblyName>VictorFrye.MockingMirror.Extensions.ServiceDefaults</AssemblyName>
-    <RootNamespace>VictorFrye.MockingMirror.Extensions.ServiceDefaults</RootNamespace>
+    <RootNamespace>VictorFrye.MockingMirror.Extensions.ServiceDefaults</RootNamespace>  
   </PropertyGroup>
 
   <ItemGroup>

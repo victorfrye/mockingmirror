@@ -13,7 +13,7 @@
     <AssemblyName>VictorFrye.MockingMirror.AppHost</AssemblyName>
     <RootNamespace>VictorFrye.MockingMirror.AppHost</RootNamespace>
 
-	<UserSecretsId>353d8321-8cea-41fd-b09b-0503c184b4c8</UserSecretsId>
+	  <UserSecretsId>353d8321-8cea-41fd-b09b-0503c184b4c8</UserSecretsId>  
   </PropertyGroup>
 
   <ItemGroup>
