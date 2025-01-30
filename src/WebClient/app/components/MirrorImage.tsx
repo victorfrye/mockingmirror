@@ -6,9 +6,8 @@ import {
   makeStyles,
   Spinner,
 } from '@fluentui/react-components';
-import useAxios from '@mockingmirror/hooks/useAxios';
-import { AxiosRequestConfig } from 'axios';
 import { FC, useEffect, useMemo, useState } from 'react';
+import useFetch from '@mockingmirror/hooks/useFetch';
 
 const useStyles = makeStyles({
   card: {
@@ -45,32 +44,29 @@ interface MirrorImageProps {
 const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
   const styles = useStyles();
   const [roast, setRoast] = useState<Roast | null>(null);
-  const request: AxiosRequestConfig<RoastRequest> = useMemo(
+  const request: RequestInit = useMemo(
     () => ({
       method: 'post',
-      url: '/roasts',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      data: {
+      body: JSON.stringify({
         imageBytes: image.split('base64,').pop(),
-      } as RoastRequest,
+      } as RoastRequest),
     }),
     [image]
   );
 
-  const { response, error, loading } = useAxios<RoastRequest, RoastResponse>(
-    request
-  );
+  const { data, error, loading } = useFetch<RoastResponse>('/roasts', request);
 
   useEffect(() => {
-    if (response !== null) {
+    if (data !== null) {
       setRoast({
-        text: response.textBody,
+        text: data.textBody,
       });
     }
-  }, [response]);
+  }, [data]);
 
   return (
     <Card className={styles.card} appearance="filled-alternative">

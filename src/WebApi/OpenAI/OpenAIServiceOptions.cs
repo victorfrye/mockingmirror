@@ -2,7 +2,7 @@
 
 namespace VictorFrye.MockingMirror.WebApi.OpenAI;
 
-public class OpenAIServiceOptions
+internal class OpenAIServiceOptions
 {
     public const string ConfigurationSectionName = nameof(OpenAIServiceOptions);
 
