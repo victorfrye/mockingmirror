@@ -1,0 +1,25 @@
+﻿using Microsoft.CognitiveServices.Speech;
+using Microsoft.Extensions.Options;
+
+namespace VictorFrye.MockingMirror.WebApi.Speech;
+
+internal class SpeechService(IOptions<SpeechServiceOptions> options) : ISpeechService
+{
+    private readonly SpeechServiceOptions _options = options.Value;
+
+    private SpeechConfig Config => SpeechConfig.FromSubscription(_options.ApiKey, _options.Region);
+
+    public async Task<string> GetSpeech(string text)
+    {
+        var config = Config;
+
+        config.SpeechSynthesisLanguage = "en-US";
+        config.SpeechSynthesisVoiceName = "en-US-AvaMultilingualNeural";
+
+        using SpeechSynthesizer synthesizer = new(config);
+
+        var result = await synthesizer.SpeakTextAsync(text);
+
+        return Convert.ToBase64String(result.AudioData);
+    }
+}
