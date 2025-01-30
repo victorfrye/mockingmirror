@@ -9,6 +9,8 @@
 
     <AssemblyName>VictorFrye.MockingMirror.Extensions.ServiceDefaults</AssemblyName>
     <RootNamespace>VictorFrye.MockingMirror.Extensions.ServiceDefaults</RootNamespace>
+  
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup>
