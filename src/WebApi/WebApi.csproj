@@ -9,8 +9,6 @@
 	  <RootNamespace>VictorFrye.MockingMirror.WebApi</RootNamespace>
 
 	  <UserSecretsId>e122d9a7-f443-45da-8b92-2fbcd92d387e</UserSecretsId>
-
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -19,8 +19,8 @@ var config = builder.Configuration;
 
 builder.Services.AddOptions<OpenAIServiceOptions>()
                 .Bind(builder.Configuration.GetSection(OpenAIServiceOptions.ConfigurationSectionName));
-                //.ValidateDataAnnotations();
-                // .ValidateOnStart();
+//.ValidateDataAnnotations();
+// .ValidateOnStart();
 
 builder.Services.AddScoped<IOpenAIService, OpenAIService>()
                 .AddScoped<IRoastService, RoastService>();

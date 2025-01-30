@@ -8,9 +8,7 @@
     <IsAspireSharedProject>true</IsAspireSharedProject>
 
     <AssemblyName>VictorFrye.MockingMirror.Extensions.ServiceDefaults</AssemblyName>
-    <RootNamespace>VictorFrye.MockingMirror.Extensions.ServiceDefaults</RootNamespace>
-  
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RootNamespace>VictorFrye.MockingMirror.Extensions.ServiceDefaults</RootNamespace>  
   </PropertyGroup>
 
   <ItemGroup>

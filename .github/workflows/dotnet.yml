@@ -16,7 +16,6 @@ defaults:
 
 env:
     DOTNET_VERSION: '9.x'
-    NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
   build-and-test:
@@ -31,11 +30,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-        cache: true
-        cache-dependency-path: |
-          ./src/AppHost/packages.lock.json
-          ./src/ServiceDefaults/packages.lock.json
-          ./src/WebApi/packages.lock.json
 
     - name: Install dependencies
       run: dotnet restore --locked-mode
