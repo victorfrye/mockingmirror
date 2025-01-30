@@ -112,7 +112,7 @@ const Mirror = () => {
             <Image
               as="img"
               src={ClownEmoji}
-              alt="a headstone for that which is dead"
+              alt="a clown to represent the mirror"
               height={72}
               width={72}
             />
@@ -124,7 +124,7 @@ const Mirror = () => {
           }
           description={
             <Subtitle2 as="em" className={styles.tagline}>
-              An AI-as-a-service demo application by Victor Frye
+              Mirror, mirror on the screen, who knows nothing about AI at all?
             </Subtitle2>
           }
         />
