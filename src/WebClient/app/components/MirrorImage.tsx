@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 
 interface Roast {
   text: string;
+  speech: string | null;
 }
 
 interface RoastRequest {
@@ -44,7 +45,7 @@ interface MirrorImageProps {
 
 const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
   const styles = useStyles();
-  const [roast, setRoast] = useState<Roast | null>(null);
+
   const request: RequestInit = useMemo(
     () => ({
       method: 'post',
@@ -58,16 +59,31 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
     }),
     [image]
   );
-
   const { data, error, loading } = useFetch<RoastResponse>('/roasts', request);
+
+  const [roast, setRoast] = useState<Roast | null>(null);
+
+  const playSpeech = (speech: string) => {
+    const audio = new Audio(`data:audio/wav;base64,${speech}`);
+    audio.play().catch((error) => {
+      console.error('Error playing audio: ', error);
+    });
+  };
 
   useEffect(() => {
     if (data !== null) {
       setRoast({
         text: data.completionText,
+        speech: data.speechBytes,
       });
     }
   }, [data]);
+
+  useEffect(() => {
+    if (roast?.speech) {
+      playSpeech(roast?.speech);
+    }
+  }, [roast]);
 
   return (
     <Card className={styles.card} appearance="filled-alternative">
