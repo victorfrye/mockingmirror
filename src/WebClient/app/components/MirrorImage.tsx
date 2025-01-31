@@ -6,7 +6,7 @@ import {
   makeStyles,
   Spinner,
 } from '@fluentui/react-components';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useFetch from '@mockingmirror/hooks/useFetch';
 
 const useStyles = makeStyles({
@@ -63,15 +63,26 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
 
   const [roast, setRoast] = useState<Roast | null>(null);
 
-  const playSpeech = (speech: string) => {
-    const audio = new Audio(`data:audio/wav;base64,${speech}`);
-    audio.play().catch((error) => {
-      console.error('Error playing audio: ', error);
-    });
-  };
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playSpeech = useCallback(() => {
+    if (roast?.speech) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+
+      const audio = new Audio(`data:audio/wav;base64,${roast?.speech}`);
+      audioRef.current = audio;
+
+      audio.play().catch((error) => {
+        console.error('Error playing audio: ', error);
+      });
+    }
+  }, [roast]);
 
   useEffect(() => {
-    if (data !== null) {
+    if (data) {
       setRoast({
         text: data.completionText,
         speech: data.speechBytes,
@@ -80,10 +91,8 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
   }, [data]);
 
   useEffect(() => {
-    if (roast?.speech) {
-      playSpeech(roast?.speech);
-    }
-  }, [roast]);
+    playSpeech();
+  }, [playSpeech]);
 
   return (
     <Card className={styles.card} appearance="filled-alternative">

@@ -8,10 +8,11 @@ internal class OpenAIServiceOptions
 
     [Required]
     [Url]
-    public required Uri Endpoint { get; set; }
+    public required string Endpoint { get; set; }
 
     [Required]
     public required string ApiKey { get; set; }
 
-    public string DeploymentName { get; set; } = "gpt-4o mini";
+    [Required]
+    public required string DeploymentName { get; set; }
 }

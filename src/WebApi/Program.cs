@@ -19,10 +19,14 @@ builder.AddServiceDefaults();
 var config = builder.Configuration;
 
 builder.Services.AddOptions<OpenAIServiceOptions>()
-                .Bind(builder.Configuration.GetSection(OpenAIServiceOptions.ConfigurationSectionName));
+                .Bind(builder.Configuration.GetSection(OpenAIServiceOptions.ConfigurationSectionName))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
 builder.Services.AddOptions<SpeechServiceOptions>()
-                .Bind(builder.Configuration.GetSection(SpeechServiceOptions.ConfigurationSectionName));
+                .Bind(builder.Configuration.GetSection(SpeechServiceOptions.ConfigurationSectionName))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
 builder.Services.AddScoped<IOpenAIService, OpenAIService>()
                 .AddScoped<ISpeechService, SpeechService>()

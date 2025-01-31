@@ -11,21 +11,27 @@ internal class OpenAIService(IOptions<OpenAIServiceOptions> options) : IOpenAISe
 {
     private readonly OpenAIServiceOptions _options = options.Value;
 
-    private AzureOpenAIClient Client => new(_options.Endpoint, new AzureKeyCredential(_options.ApiKey));
+    private AzureOpenAIClient Client => new(new(_options.Endpoint), new AzureKeyCredential(_options.ApiKey));
 
     private ChatClient ChatClient => Client.GetChatClient(_options.DeploymentName);
 
-    public async Task<string> GetCompletion(string prompt, string imageBytes, string imageMime = "image/png")
+    private readonly ChatCompletionOptions ChatOptions = new()
     {
-        var imageUri = new Uri($"data:{imageMime};base64,{imageBytes}");
+        Temperature = (float)0.2,
+        MaxOutputTokenCount = 500,
+    };
+
+    public async Task<string> GetCompletion(string prompt, string imageBytes, string imageMime = "image/png", CancellationToken cancellationToken = default)
+    {
+        var imageData = BinaryData.FromBytes(Convert.FromBase64String(imageBytes));
 
         List<ChatMessage> messages = [
             new UserChatMessage(
                 ChatMessageContentPart.CreateTextPart(prompt),
-                ChatMessageContentPart.CreateImagePart(imageUri, imageMime))
+                ChatMessageContentPart.CreateImagePart(imageData, imageMime))
             ];
 
-        ChatCompletion completion = await ChatClient.CompleteChatAsync(messages);
+        ChatCompletion completion = await ChatClient.CompleteChatAsync(messages, ChatOptions, cancellationToken);
 
         return completion.Content[0].Text;
     }
