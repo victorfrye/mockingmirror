@@ -16,7 +16,7 @@ import {
 import useDarkMode from '@mockingmirror/hooks/useDarkMode';
 import MirrorCamera from '@mockingmirror/components/MirrorCamera';
 
-import ClownEmoji from '/clown.svg';
+import ClownEmoji from '/images/clown.svg';
 import { ChangeEvent, useState } from 'react';
 import MirrorImage from '@mockingmirror/components/MirrorImage';
 
