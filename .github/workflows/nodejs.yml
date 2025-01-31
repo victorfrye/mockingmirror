@@ -1,9 +1,10 @@
-name: Node.js Build and Test
+name: Node.js CI
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     branches: [ "main" ]
 
 permissions:
@@ -21,6 +22,7 @@ env:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    name: Build and Test
 
     steps:
     
@@ -40,6 +42,6 @@ jobs:
     - name: Verify formatting
       run: npm run lint:check
 
-    - name: Build project
+    - name: Build sources
       run: npm run build
     
