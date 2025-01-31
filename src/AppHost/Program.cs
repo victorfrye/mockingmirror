@@ -6,7 +6,7 @@ var api = builder.AddProject<Projects.WebApi>("api")
 builder.AddNpmApp("client", "../WebClient", "dev")
     .WithReference(api)
     .WaitFor(api)
-    .WithEnvironment("VITE_API_HTTPS_BASEURL", api.GetEndpoint("https"))
+    .WithEnvironment("VITE_API_BASEURL", api.GetEndpoint("https"))
     .WithHttpEndpoint(port: 5173, env: "VITE_PORT")
     .WithExternalHttpEndpoints();
 

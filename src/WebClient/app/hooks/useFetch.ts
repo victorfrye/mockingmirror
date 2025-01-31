@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const baseUrl = import.meta.env.VITE_API_HTTPS_BASEURL;
+const baseUrl = import.meta.env.VITE_API_BASEURL;
 
 const useFetch = <T>(url: string, request: RequestInit) => {
   const [data, setData] = useState<T | null>(null);

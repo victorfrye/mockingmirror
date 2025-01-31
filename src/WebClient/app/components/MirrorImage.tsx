@@ -33,7 +33,8 @@ interface RoastRequest {
 }
 
 interface RoastResponse {
-  textBody: string;
+  completionText: string;
+  speechBytes: string | null;
   prompt: string | null;
 }
 
@@ -63,7 +64,7 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
   useEffect(() => {
     if (data !== null) {
       setRoast({
-        text: data.textBody,
+        text: data.completionText,
       });
     }
   }, [data]);

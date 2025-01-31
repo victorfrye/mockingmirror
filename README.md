@@ -1,6 +1,6 @@
 # Mocking Mirror
 
-🤡 Mirror mirror on the wall, who knows nothing about AI at all?
+🤡 Mirror, mirror on the screen, who knows nothing about AI at all?
 
 ## Overview
 
