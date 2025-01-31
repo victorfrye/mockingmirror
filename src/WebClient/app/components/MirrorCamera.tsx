@@ -38,16 +38,16 @@ interface MirrorCameraProps {
 
 const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
   const styles = useStyles();
-  const video = useRef<HTMLVideoElement | null>(null);
-  const canvas = useRef<HTMLCanvasElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
-      if (video.current) {
-        video.current.srcObject = stream;
-        video.current.play();
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
       }
     } catch (error) {
       console.error('Error accessing the camera: ', error);
@@ -55,21 +55,21 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
   };
 
   const takeSnapshot = () => {
-    if (canvas.current && video.current) {
-      const context = canvas.current.getContext('2d');
+    if (canvasRef.current && videoRef.current) {
+      const context = canvasRef.current.getContext('2d');
 
-      canvas.current.width = video.current.videoWidth;
-      canvas.current.height = video.current.videoHeight;
+      canvasRef.current.width = videoRef.current.videoWidth;
+      canvasRef.current.height = videoRef.current.videoHeight;
 
       if (context) {
         context.drawImage(
-          video.current,
+          videoRef.current,
           0,
           0,
-          canvas.current.width,
-          canvas.current.height
+          canvasRef.current.width,
+          canvasRef.current.height
         );
-        const dataUrl = canvas.current.toDataURL('image/png');
+        const dataUrl = canvasRef.current.toDataURL('image/png');
 
         handleImageChanged(dataUrl);
       }
@@ -80,9 +80,9 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
     startCamera();
 
     return () => {
-      if (video.current?.srcObject) {
+      if (videoRef.current?.srcObject) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        const stream = video.current.srcObject as MediaStream;
+        const stream = videoRef.current.srcObject as MediaStream;
 
         stream.getTracks().forEach((track) => track.stop());
       }
@@ -94,14 +94,14 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
       {/* eslint-disable @typescript-eslint/no-explicit-any */}
       <Image
         as={'video' as any}
-        ref={video as any}
+        ref={videoRef as any}
         className={styles.video}
         shadow
         shape="rounded"
       />
       {/* eslint-enable @typescript-eslint/no-explicit-any */}
 
-      <canvas ref={canvas} className={styles.canvas} />
+      <canvas ref={canvasRef} className={styles.canvas} />
 
       <CardFooter
         className={styles.footer}
