@@ -7,8 +7,10 @@ const useFetch = <T>(url: string, request: RequestInit) => {
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = useCallback((url: string, init: RequestInit) => {
-    fetch(`${baseUrl}${url}`, init)
+  const fetchData = useCallback((url: string, req: RequestInit) => {
+    setLoading(true);
+
+    fetch(`${baseUrl}${url}`, req)
       .then((response) => response.json())
       .then((data) => setData(data))
       .catch((error) => {
