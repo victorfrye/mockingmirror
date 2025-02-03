@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import {
   FluentProvider,
   makeStaticStyles,
@@ -6,7 +8,6 @@ import {
   webLightTheme,
 } from '@fluentui/react-components';
 import useDarkMode from '@mockingmirror/hooks/useDarkMode';
-import * as React from 'react';
 
 const useStaticStyles = makeStaticStyles({
   html: {
@@ -45,9 +46,7 @@ const useStaticStyles = makeStaticStyles({
   },
 });
 
-const ThemeProvider = ({
-  children,
-}: Readonly<{ children: React.ReactNode }>) => {
+const ThemeProvider = ({ children }: Readonly<{ children: ReactNode }>) => {
   useStaticStyles();
   const { isDark } = useDarkMode();
 

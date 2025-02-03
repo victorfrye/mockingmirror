@@ -1,9 +1,12 @@
+import { ChangeEvent, useState } from 'react';
+
+import ClownEmoji from '/images/clown.svg';
 import {
-  Image,
   Caption1,
   Card,
   CardFooter,
   CardHeader,
+  Image,
   Subtitle2,
   Switch,
   SwitchOnChangeData,
@@ -11,12 +14,9 @@ import {
   makeStyles,
   tokens,
 } from '@fluentui/react-components';
-import useDarkMode from '@mockingmirror/hooks/useDarkMode';
 import MirrorCamera from '@mockingmirror/components/MirrorCamera';
-
-import ClownEmoji from '/images/clown.svg';
-import { ChangeEvent, useState } from 'react';
 import MirrorDisplay from '@mockingmirror/components/MirrorDisplay';
+import useDarkMode from '@mockingmirror/hooks/useDarkMode';
 
 const useStyles = makeStyles({
   frame: {
