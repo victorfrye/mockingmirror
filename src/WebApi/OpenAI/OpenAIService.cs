@@ -21,9 +21,9 @@ internal class OpenAIService(IOptions<OpenAIServiceOptions> options) : IOpenAISe
         MaxOutputTokenCount = 500,
     };
 
-    public async Task<string> GetCompletion(string prompt, string imageBytes, string imageMime = "image/png", CancellationToken cancellationToken = default)
+    public async Task<string> GetCompletion(string prompt, byte[] imageBytes, string imageMime, CancellationToken cancellationToken = default)
     {
-        var imageData = BinaryData.FromBytes(Convert.FromBase64String(imageBytes));
+        var imageData = BinaryData.FromBytes(imageBytes);
 
         List<ChatMessage> messages = [
             new UserChatMessage(

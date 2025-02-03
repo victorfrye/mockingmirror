@@ -74,7 +74,7 @@ git clone https://github.com/victorfrye/mockingmirror.git
 To run the application, simply run the following command in the root of the project:
 
 ```pwsh
-dotnet run --project .\src\AppHost\AppHost.csproj
+dotnet run --project ./src/AppHost/AppHost.csproj
 ```
 
 ## Acknowledgements

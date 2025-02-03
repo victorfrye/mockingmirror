@@ -6,7 +6,7 @@ public class RoastResponse
 
     public required string CompletionText { get; set; }
 
-    public string? SpeechBytes { get; set; } = null;
+    public byte[]? SpeechBytes { get; set; } = null;
 
     public string? Prompt { get; set; } = null;
 }

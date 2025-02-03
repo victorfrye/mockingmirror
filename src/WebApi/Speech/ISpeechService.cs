@@ -2,5 +2,5 @@
 
 internal interface ISpeechService
 {
-    Task<string> GetSpeech(string text);
+    Task<byte[]> GetSpeech(string text);
 }
