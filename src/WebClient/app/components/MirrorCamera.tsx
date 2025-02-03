@@ -1,3 +1,5 @@
+import { FC, useEffect, useRef } from 'react';
+
 import {
   Button,
   Card,
@@ -6,7 +8,6 @@ import {
   makeStyles,
 } from '@fluentui/react-components';
 import { Camera16Regular } from '@fluentui/react-icons';
-import { useEffect, FC, useRef } from 'react';
 
 const useStyles = makeStyles({
   card: {

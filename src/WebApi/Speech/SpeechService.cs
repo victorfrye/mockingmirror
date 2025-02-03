@@ -15,8 +15,9 @@ internal class SpeechService(IOptions<SpeechServiceOptions> options) : ISpeechSe
 
         config.SpeechSynthesisLanguage = "en-US";
         config.SpeechSynthesisVoiceName = "en-US-AvaMultilingualNeural";
+        config.SetSpeechSynthesisOutputFormat(SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm);
 
-        using SpeechSynthesizer synthesizer = new(config);
+        using SpeechSynthesizer synthesizer = new(config, null);
 
         var result = await synthesizer.SpeakTextAsync(text);
 

@@ -1,12 +1,13 @@
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import {
   Body1,
   Card,
   CardFooter,
   Image,
-  makeStyles,
   Spinner,
+  makeStyles,
 } from '@fluentui/react-components';
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import useFetch from '@mockingmirror/hooks/useFetch';
 
 const useStyles = makeStyles({
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 
 interface Roast {
   text: string;
-  // speech?: string | null;
+  speech: string | null;
 }
 
 interface RoastRequest {
@@ -35,7 +36,7 @@ interface RoastRequest {
 
 interface RoastResponse {
   completionText: string;
-  // speechBytes: string | null;
+  speechBytes: string | null;
   prompt: string | null;
 }
 
@@ -63,34 +64,32 @@ const MirrorDisplay: FC<MirrorDisplayProps> = ({ image }) => {
   );
   const { data, error, loading } = useFetch<RoastResponse>('/roasts', request);
 
-  // TODO: Speech bytes are playing auto-magically and I don't know why
+  const playSpeech = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
 
-  // const playSpeech = useCallback(() => {
-  //   if (roast?.speech) {
-  //     if (audioRef.current) {
-  //       audioRef.current.pause();
-  //     }
-
-  //     const audio = new Audio(`data:audio/wav;base64,${roast.speech}`);
-  //     audioRef.current = audio;
-  //     audio.play().catch((error) => {
-  //       console.error('Error playing audio: ', error);
-  //     });
-  //   }
-  // }, [roast]);
+    if (roast?.speech) {
+      const audio = new Audio(`data:audio/wav;base64,${roast.speech}`);
+      audioRef.current = audio;
+      audio.play().catch((error) => {
+        console.error('Error playing audio: ', error);
+      });
+    }
+  }, [roast]);
 
   useEffect(() => {
     if (data) {
       setRoast({
         text: data.completionText,
-        // speech: data.speechBytes,
+        speech: data.speechBytes,
       });
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   playSpeech();
-  // }, [playSpeech]);
+  useEffect(() => {
+    playSpeech();
+  }, [playSpeech]);
 
   return (
     <Card className={styles.card} appearance="filled-alternative">

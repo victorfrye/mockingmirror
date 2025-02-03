@@ -1,6 +1,6 @@
+import Mirror from '@mockingmirror/components/Mirror';
 import DarkModeProvider from '@mockingmirror/providers/DarkMode';
 import ThemeProvider from '@mockingmirror/providers/Theme';
-import Mirror from '@mockingmirror/components/Mirror';
 
 const App = () => {
   return (
