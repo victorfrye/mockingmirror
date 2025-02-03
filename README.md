@@ -85,7 +85,7 @@ git clone https://github.com/victorfrye/mockingmirror.git
 
 ### Set user secrets
 
-To run the application, you will need to set the user secrets for the `WebApi` project. An [example file](./src/WebApi/usersecrets.Example.json) is provided sharing the flattened document structure and variables expected. To set the user secrets, run the following PowerShell script with your modified file command in the root of the project or use your IDE:
+To run the application, you will need to set the user secrets for the `WebApi` project. An [example file](./src/WebApi/secrets.Example.json) is provided sharing the flattened document structure and variables expected. To set the user secrets, run the following PowerShell script with your modified file command in the root of the project or use your IDE:
 
 ```pwsh
 Get-Content ./path/to/your/usersecrets.json | dotnet user-secrets set --project ./src/WebApi/WebApi.csproj
