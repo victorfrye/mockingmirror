@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Image,
   Caption1,
@@ -18,7 +16,7 @@ import MirrorCamera from '@mockingmirror/components/MirrorCamera';
 
 import ClownEmoji from '/images/clown.svg';
 import { ChangeEvent, useState } from 'react';
-import MirrorImage from '@mockingmirror/components/MirrorImage';
+import MirrorDisplay from '@mockingmirror/components/MirrorDisplay';
 
 const useStyles = makeStyles({
   frame: {
@@ -132,7 +130,7 @@ const Mirror = () => {
         <div className={styles.mirrorContainer}>
           <MirrorCamera handleImageChanged={onImageChanged} />
 
-          {image && <MirrorImage image={image} />}
+          {image && <MirrorDisplay image={image} />}
         </div>
 
         <CardFooter className={styles.footer}>

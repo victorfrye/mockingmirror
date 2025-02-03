@@ -6,7 +6,7 @@ import {
   makeStyles,
   Spinner,
 } from '@fluentui/react-components';
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import useFetch from '@mockingmirror/hooks/useFetch';
 
 const useStyles = makeStyles({
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 interface Roast {
   text: string;
-  speech: string | null;
+  // speech?: string | null;
 }
 
 interface RoastRequest {
@@ -35,16 +35,18 @@ interface RoastRequest {
 
 interface RoastResponse {
   completionText: string;
-  speechBytes: string | null;
+  // speechBytes: string | null;
   prompt: string | null;
 }
 
-interface MirrorImageProps {
+interface MirrorDisplayProps {
   image: string;
 }
 
-const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
+const MirrorDisplay: FC<MirrorDisplayProps> = ({ image }) => {
   const styles = useStyles();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [roast, setRoast] = useState<Roast | null>(null);
 
   const request: RequestInit = useMemo(
     () => ({
@@ -61,38 +63,34 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
   );
   const { data, error, loading } = useFetch<RoastResponse>('/roasts', request);
 
-  const [roast, setRoast] = useState<Roast | null>(null);
+  // TODO: Speech bytes are playing auto-magically and I don't know why
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  // const playSpeech = useCallback(() => {
+  //   if (roast?.speech) {
+  //     if (audioRef.current) {
+  //       audioRef.current.pause();
+  //     }
 
-  const playSpeech = useCallback(() => {
-    if (roast?.speech) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-
-      const audio = new Audio(`data:audio/wav;base64,${roast?.speech}`);
-      audioRef.current = audio;
-
-      audio.play().catch((error) => {
-        console.error('Error playing audio: ', error);
-      });
-    }
-  }, [roast]);
+  //     const audio = new Audio(`data:audio/wav;base64,${roast.speech}`);
+  //     audioRef.current = audio;
+  //     audio.play().catch((error) => {
+  //       console.error('Error playing audio: ', error);
+  //     });
+  //   }
+  // }, [roast]);
 
   useEffect(() => {
     if (data) {
       setRoast({
         text: data.completionText,
-        speech: data.speechBytes,
+        // speech: data.speechBytes,
       });
     }
   }, [data]);
 
-  useEffect(() => {
-    playSpeech();
-  }, [playSpeech]);
+  // useEffect(() => {
+  //   playSpeech();
+  // }, [playSpeech]);
 
   return (
     <Card className={styles.card} appearance="filled-alternative">
@@ -115,6 +113,8 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
                 ? 'Hmmm. Something went wrong and it is probably your fault.'
                 : roast?.text}
             </Body1>
+
+            <audio ref={audioRef} />
           </CardFooter>
         </>
       )}
@@ -122,4 +122,4 @@ const MirrorImage: FC<MirrorImageProps> = ({ image }) => {
   );
 };
 
-export default MirrorImage;
+export default MirrorDisplay;

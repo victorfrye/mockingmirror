@@ -33,9 +33,9 @@ internal class RoastService(IOpenAIService openAIService, ISpeechService speechS
 
     public async Task<RoastResponse> AddRoast(RoastRequest request, CancellationToken cancellationToken)
     {
-        var completion = await _openAIService.GetCompletion(prompt, request.ImageBytes, cancellationToken: cancellationToken);
+        var completion = await _openAIService.GetCompletion(prompt, request.ImageBytes, request.ImageMime, cancellationToken);
 
-        string? speechBytes = null;
+        byte[]? speechBytes = null;
 
         if (request.IncludeSpeech)
         {

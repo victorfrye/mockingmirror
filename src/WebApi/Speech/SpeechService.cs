@@ -9,7 +9,7 @@ internal class SpeechService(IOptions<SpeechServiceOptions> options) : ISpeechSe
 
     private SpeechConfig Config => SpeechConfig.FromSubscription(_options.ApiKey, _options.Region);
 
-    public async Task<string> GetSpeech(string text)
+    public async Task<byte[]> GetSpeech(string text)
     {
         var config = Config;
 
@@ -20,6 +20,6 @@ internal class SpeechService(IOptions<SpeechServiceOptions> options) : ISpeechSe
 
         var result = await synthesizer.SpeakTextAsync(text);
 
-        return Convert.ToBase64String(result.AudioData);
+        return result.AudioData;
     }
 }
