@@ -2,5 +2,5 @@
 
 internal interface IOpenAIService
 {
-    Task<string> GetCompletion(string prompt, byte[] imageBytes, string imageMime, CancellationToken cancellationToken = default);
+    Task<string> GetCompletion(byte[] imageBytes, string imageMime, CancellationToken cancellationToken = default);
 }

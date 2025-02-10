@@ -7,15 +7,19 @@ internal class SpeechService(IOptions<SpeechServiceOptions> options) : ISpeechSe
 {
     private readonly SpeechServiceOptions _options = options.Value;
 
+    private const string Language = "en-US";
+    private const string VoiceName = "en-US-AvaMultilingualNeural";
+    private readonly SpeechSynthesisOutputFormat OutputFormat = SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm;
+
     private SpeechConfig Config => SpeechConfig.FromSubscription(_options.ApiKey, _options.Region);
 
     public async Task<byte[]> GetSpeech(string text)
     {
         var config = Config;
 
-        config.SpeechSynthesisLanguage = "en-US";
-        config.SpeechSynthesisVoiceName = "en-US-AvaMultilingualNeural";
-        config.SetSpeechSynthesisOutputFormat(SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm);
+        config.SpeechSynthesisLanguage = Language;
+        config.SpeechSynthesisVoiceName = VoiceName;
+        config.SetSpeechSynthesisOutputFormat(OutputFormat);
 
         using SpeechSynthesizer synthesizer = new(config, null);
 
