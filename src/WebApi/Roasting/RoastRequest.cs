@@ -6,5 +6,5 @@ public class RoastRequest
 
     public string ImageMime { get; set; } = "image/png";
 
-    public bool IncludeSpeech { get; set; } = false;
+    public bool IncludeSpeech { get; set; } = true;
 }

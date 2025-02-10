@@ -32,10 +32,10 @@ internal class OpenAIService(IOptions<OpenAIServiceOptions> options) : IOpenAISe
         Keep your response to two or three sentences.
 
         Some example responses include:
-        1. Like a steamroller flattened a cat that had already been left out on the roof too long.
-        2. Well, with that white hat you really should be wearing something a bit more summery, don't you think?
-        3. Those dark eyes are so noticeable your mom will be asking if you're tired.
-        4. The 1980s called. They want their hair and shoulder pads back.
+          1. Like a steamroller flattened a cat that had already been left out on the roof too long.
+          2. Well, with that white hat you really should be wearing something a bit more summery, don't you think?
+          3. Those dark eyes are so noticeable your mom will be asking if you're tired.
+          4. The 1980s called. They want their hair and shoulder pads back.
 
         Respond humorously to the picture of the user.
 
@@ -44,7 +44,7 @@ internal class OpenAIService(IOptions<OpenAIServiceOptions> options) : IOpenAISe
 
     private readonly ChatCompletionOptions ChatOptions = new()
     {
-        Temperature = 1.5f,
+        Temperature = 1.2f,
         MaxOutputTokenCount = 500,
     };
 
