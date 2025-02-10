@@ -37,7 +37,6 @@ interface RoastRequest {
 interface RoastResponse {
   completionText: string;
   speechBytes: string | null;
-  prompt: string | null;
 }
 
 interface MirrorDisplayProps {
