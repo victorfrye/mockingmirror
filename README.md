@@ -65,6 +65,20 @@ This project uses multiple backing Azure AI services. To run the application, yo
 
 You will also need to deploy a vision-enabled model to your OpenAI service. Additionally, you may need to adjust the content filters to allow for the generation of sarcastic responses. For more information, see the [Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/).
 
+Infrastructure as code (IaC) is provided in the [Infra](./infra) directory to help you deploy the necessary resources. The IaC is written in Bicep and can be deployed using the Azure CLI or Azure PowerShell with the following steps:
+
+1. Update the parameters in the [main.bicepparam](./infra/main.bicepparam) file.
+
+2. Run the following respective Azure CLI or Azure PowerShell command with your resource group name (use -WhatIf flag to preview changes):
+
+```pwsh
+New-AzResourceGroupDeployment -Name MockingMirrorInit -ResourceGroupName '<rg-name>' -Mode Complete -TemplateFile ./infra/main.bicep -TemplateParameterFile ./infra/main.bicepparam
+```
+
+```bash
+az deployment group create --name MockingMirrorInit --resource-group '<rg-name>' --mode Complete --template-file ./infra/main.bicep --parameters ./infra/main.bicepparam
+```
+
 *WARNING: Azure AI services may require a subscription and may incur costs. Be sure to review the pricing and terms of service before using these services.*
 
 ### HTTPS
