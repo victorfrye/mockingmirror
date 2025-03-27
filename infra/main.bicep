@@ -1,4 +1,4 @@
-param projectName string 
+param projectName string
 
 param openaiAccountName string
 param speechAccountName string
@@ -93,7 +93,7 @@ resource openaiDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024
     }
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
     currentCapacity: 10
-    raiPolicyName: filterPolicyName
+    raiPolicyName: 'Microsoft.DefaultV2'
   }
 }
 

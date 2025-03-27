@@ -76,7 +76,7 @@ New-AzResourceGroupDeployment -Name MockingMirrorInit -ResourceGroupName '<rg-na
 ```
 
 ```bash
-az deployment group create --name MockingMirrorInit --resource-group '<rg-name>' --mode Complete --template-file ./infra/main.bicep --parameters ./infra/main.bicepparam
+az deployment group create --resource-group '<rg-name>' --mode Complete --template-file ./infra/main.bicep --parameters ./infra/main.bicepparam
 ```
 
 *WARNING: Azure AI services may require a subscription and may incur costs. Be sure to review the pricing and terms of service before using these services.*

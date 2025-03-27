@@ -2,11 +2,11 @@ using 'main.bicep'
 
 param projectName = 'Mocking Mirror' 
 
-param openaiAccountName = ''
+param openaiAccountName = 'oai-mockingmirror'
 
-param speechAccountName = ''
+param speechAccountName = 'spch-mockingmirror'
 
-param visionAccountName = ''
+param visionAccountName = 'cv-mockingmirror'
 
 param openaiDeploymentName = 'gpt-4o'
 
