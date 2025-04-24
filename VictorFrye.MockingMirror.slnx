@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/Infra/">
+    <File Path="infra/main.bicep" />
+    <File Path="infra/main.bicepparam" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/AppHost/AppHost.csproj" />
+  <Project Path="src/ServiceDefaults/ServiceDefaults.csproj" />
+  <Project Path="src/WebApi/WebApi.csproj" />
+  <Project Path="src/WebClient/WebClient.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
