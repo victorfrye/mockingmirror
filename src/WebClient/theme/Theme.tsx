@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+'use client';
+
+import * as React from 'react';
 
 import {
   FluentProvider,
@@ -7,7 +9,8 @@ import {
   webDarkTheme,
   webLightTheme,
 } from '@fluentui/react-components';
-import useDarkMode from '@mockingmirror/hooks/useDarkMode';
+
+import useDarkMode from '@mockingmirror/theme/useDarkMode';
 
 const useStaticStyles = makeStaticStyles({
   html: {
@@ -46,7 +49,9 @@ const useStaticStyles = makeStaticStyles({
   },
 });
 
-const ThemeProvider = ({ children }: Readonly<{ children: ReactNode }>) => {
+const ThemeProvider = ({
+  children,
+}: Readonly<{ children: React.ReactNode }>) => {
   useStaticStyles();
   const { isDark } = useDarkMode();
 
@@ -58,5 +63,3 @@ const ThemeProvider = ({ children }: Readonly<{ children: ReactNode }>) => {
 };
 
 export default ThemeProvider;
-
-export { ThemeProvider };

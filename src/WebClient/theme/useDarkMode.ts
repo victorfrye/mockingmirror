@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { DarkModeContext } from '@mockingmirror/providers/DarkMode';
+import { DarkModeContext } from '@mockingmirror/theme/DarkMode';
 
 const useDarkMode = () => useContext(DarkModeContext);
 

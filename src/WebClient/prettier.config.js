@@ -4,11 +4,7 @@ const config = {
   tabWidth: 2,
   semi: true,
   singleQuote: true,
-  importOrder: [
-    '^react$|^react-dom',
-    '<THIRD_PARTY_MODULES>',
-    '^@mockingmiror/',
-  ],
+  importOrder: ['^react$|^react-dom', '<THIRD_PARTY_MODULES>', '^@mockingmirror/'],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
 };

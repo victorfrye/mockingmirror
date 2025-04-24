@@ -1,6 +1,8 @@
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
 
-const baseUrl = import.meta.env.VITE_API_BASEURL;
+// const baseUrl = process.env.MOCKINGMIRROR_API_BASEURL;
+
+const baseUrl = '';
 
 interface FetchState<T> {
   data: T | null;

@@ -1,3 +1,4 @@
+import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
@@ -6,8 +7,17 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-const config = tseslint.config(
-  { ignores: ['dist', 'node_modules'] },
+const compat = new FlatCompat({
+  baseDirectory: import.meta.dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
+});
+
+const eslintConfig = tseslint.config(
+  {
+    ignores: ['out', '.next', 'node_modules'],
+    extends: [...compat.extends('next/core-web-vitals')],
+  },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -18,7 +28,7 @@ const config = tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
       parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        project: ['./tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -31,10 +41,6 @@ const config = tseslint.config(
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
     },
   },
   {
@@ -58,4 +64,4 @@ const config = tseslint.config(
   }
 );
 
-export default config;
+export default eslintConfig;

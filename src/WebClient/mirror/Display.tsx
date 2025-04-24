@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
@@ -8,7 +10,7 @@ import {
   Spinner,
   makeStyles,
 } from '@fluentui/react-components';
-import useFetch from '@mockingmirror/hooks/useFetch';
+import useFetch from '@mockingmirror/fetch/useFetch';
 
 const useStyles = makeStyles({
   card: {
@@ -39,11 +41,18 @@ interface RoastResponse {
   speechBytes: string | null;
 }
 
-interface MirrorDisplayProps {
+interface DisplayProps {
   image: string;
 }
 
-const MirrorDisplay: FC<MirrorDisplayProps> = ({ image }) => {
+// export const getServerSideProps = async (params: any) => {
+
+//   return {
+//     props: {},
+//   };
+// }
+
+const Display: FC<DisplayProps> = ({ image }) => {
   const styles = useStyles();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [roast, setRoast] = useState<Roast | null>(null);
@@ -120,4 +129,4 @@ const MirrorDisplay: FC<MirrorDisplayProps> = ({ image }) => {
   );
 };
 
-export default MirrorDisplay;
+export default Display;

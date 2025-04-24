@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useEffect, useRef } from 'react';
 
 import {
@@ -33,11 +35,11 @@ const useStyles = makeStyles({
   },
 });
 
-interface MirrorCameraProps {
+interface CameraProps {
   handleImageChanged: (src: string) => void;
 }
 
-const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
+const Camera: FC<CameraProps> = ({ handleImageChanged }) => {
   const styles = useStyles();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -122,4 +124,4 @@ const MirrorCamera: FC<MirrorCameraProps> = ({ handleImageChanged }) => {
   );
 };
 
-export default MirrorCamera;
+export default Camera;
