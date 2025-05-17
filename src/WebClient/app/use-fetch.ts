@@ -1,8 +1,8 @@
+'use client';
+
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
 
-// const baseUrl = process.env.MOCKINGMIRROR_API_BASEURL;
-
-const baseUrl = '';
+const baseUrl = process.env['NEXT_PUBLIC_API_BASEURL'];
 
 interface FetchState<T> {
   data: T | null;
@@ -60,6 +60,8 @@ const useFetch = <T>(url: string, request: RequestInit) => {
   }, []);
 
   useEffect(() => {
+    console.log('Fetching data from: ', baseUrl + url);
+
     fetchData(url, request);
   }, [fetchData, url, request]);
 

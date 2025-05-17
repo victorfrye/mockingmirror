@@ -18,7 +18,7 @@
     "allowJs": true,
     "incremental": true,
     "paths": {
-      "@mockingmirror/*": ["./*"]
+      "@mockingmirror/*": ["./app/*"]
     },
 
     /* Linting */
@@ -39,6 +39,7 @@
     "**/*.ts",
     "**/*.tsx",
     "globals.d.ts",
+    "next.config.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],

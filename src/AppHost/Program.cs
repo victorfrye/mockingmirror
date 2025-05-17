@@ -7,7 +7,7 @@ var api = builder.AddProject<Projects.WebApi>("api")
 builder.AddNpmApp("client", "../WebClient", "dev")
        .WithReference(api)
        .WaitFor(api)
-       .WithEnvironment("MOCKINGMIRROR_API_BASEURL", api.GetEndpoint("https"))
+       .WithEnvironment("NEXT_PUBLIC_API_BASEURL", api.GetEndpoint("https"))
        .WithHttpEndpoint(env: "PORT")
        .WithExternalHttpEndpoints();
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import {
   Button,
@@ -39,7 +39,7 @@ interface CameraProps {
   handleImageChanged: (src: string) => void;
 }
 
-const Camera: FC<CameraProps> = ({ handleImageChanged }) => {
+export default function Camera({ handleImageChanged }: Readonly<CameraProps>) {
   const styles = useStyles();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -100,28 +100,23 @@ const Camera: FC<CameraProps> = ({ handleImageChanged }) => {
         ref={videoRef as any}
         className={styles.video}
         shadow
-        shape="rounded"
-      />
+        shape="rounded" />
       {/* eslint-enable @typescript-eslint/no-explicit-any */}
 
       <canvas ref={canvasRef} className={styles.canvas} />
 
       <CardFooter
         className={styles.footer}
-        action={
-          <Button
-            as="button"
-            className={styles.button}
-            icon={<Camera16Regular />}
-            onClick={takeSnapshot}
-            appearance="primary"
-          >
-            Capture Image
-          </Button>
-        }
+        action={<Button
+          as="button"
+          className={styles.button}
+          icon={<Camera16Regular />}
+          onClick={takeSnapshot}
+          appearance="primary"
+        >
+          Capture Image
+        </Button>}
       ></CardFooter>
     </Card>
   );
-};
-
-export default Camera;
+}

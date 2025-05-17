@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Socials = () => {
+export default function Socials() {
   const styles = useStyles();
   const { isDark } = useDarkMode();
 
@@ -45,8 +45,7 @@ const Socials = () => {
             src={isDark ? '/images/github.svg' : '/images/github_dark.svg'}
             alt="GitHub"
             height={20}
-            width={20}
-          />
+            width={20} />
         ),
       },
     ];
@@ -64,12 +63,9 @@ const Socials = () => {
         href={social.href}
         target="_blank"
         rel="me noreferrer noopener"
-        key={social.href}
-      />
+        key={social.href} />
     ));
   };
 
   return <div className={styles.container}>{renderButtons()}</div>;
-};
-
-export default Socials;
+}

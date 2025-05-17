@@ -7,7 +7,8 @@ import {
   tokens,
 } from '@fluentui/react-components';
 
-import { Camera, Display } from '@mockingmirror/mirror';
+import Camera from '@mockingmirror/camera';
+import Display from '@mockingmirror/display';
 
 const useStyles = makeStyles({
   main: {

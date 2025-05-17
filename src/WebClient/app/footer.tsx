@@ -11,7 +11,7 @@ import {
   tokens,
 } from '@fluentui/react-components';
 
-import Socials from '@mockingmirror/layout/Socials';
+import Socials from '@mockingmirror/socials';
 import { useDarkMode } from '@mockingmirror/theme';
 
 const useStyles = makeStyles({
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Footer = () => {
+export default function Footer() {
   const styles = useStyles();
   const _today: Date = new Date();
 
@@ -66,14 +66,11 @@ const Footer = () => {
         checked={isDark}
         onChange={handleDarkModeToggled}
         label={isDark ? 'Dark Mode' : 'Light Mode'}
-        className={styles.switch}
-      />
+        className={styles.switch} />
 
       <Caption1 as="p" align="end" block className={styles.copyright}>
         © Victor Frye {_today.getFullYear()}
       </Caption1>
     </CardFooter>
   );
-};
-
-export default Footer;
+}

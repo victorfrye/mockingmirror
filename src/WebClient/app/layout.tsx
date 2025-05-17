@@ -2,9 +2,9 @@ import { ReactNode } from 'react';
 
 import { Metadata } from 'next';
 
-import { Profile } from '@mockingmirror/layout';
-import { DarkModeProvider, SsrRendererProvider, ThemeProvider } from '@mockingmirror/theme';
-import './globals.css';
+import Frame from '@mockingmirror/frame';
+import { DarkModeProvider, ThemeProvider } from '@mockingmirror/theme';
+import '@mockingmirror/globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mockingmirror.com'),
@@ -43,13 +43,11 @@ export const RootLayout = ({
     <html lang="en">
       <body>
         <div id="root">
-          <SsrRendererProvider>
-            <DarkModeProvider>
-              <ThemeProvider>
-                <Profile>{children}</Profile>
-              </ThemeProvider>
-            </DarkModeProvider>
-          </SsrRendererProvider>
+          <DarkModeProvider>
+            <ThemeProvider>
+              <Frame>{children}</Frame>
+            </ThemeProvider>
+          </DarkModeProvider>
         </div>
       </body>
     </html>

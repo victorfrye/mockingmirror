@@ -4,8 +4,8 @@ import { ReactNode } from 'react';
 
 import { Card, makeStyles, tokens } from '@fluentui/react-components';
 
-import Footer from '@mockingmirror/layout/Footer';
-import Header from '@mockingmirror/layout/Header';
+import Footer from '@mockingmirror/footer';
+import Header from '@mockingmirror/header';
 
 const useStyles = makeStyles({
   frame: {
@@ -26,11 +26,11 @@ const useStyles = makeStyles({
   },
 });
 
-export const Profile = ({
+export default function Frame({
   children,
 }: Readonly<{
   children: ReactNode;
-}>) => {
+}>) {
   const styles = useStyles();
 
   return (
@@ -42,6 +42,4 @@ export const Profile = ({
       </Card>
     </div>
   );
-};
-
-export default Profile;
+}

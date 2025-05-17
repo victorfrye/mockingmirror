@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   Body1,
@@ -10,7 +10,7 @@ import {
   Spinner,
   makeStyles,
 } from '@fluentui/react-components';
-import useFetch from '@mockingmirror/fetch/useFetch';
+import useFetch from '@mockingmirror/use-fetch';
 
 const useStyles = makeStyles({
   card: {
@@ -45,14 +45,7 @@ interface DisplayProps {
   image: string;
 }
 
-// export const getServerSideProps = async (params: any) => {
-
-//   return {
-//     props: {},
-//   };
-// }
-
-const Display: FC<DisplayProps> = ({ image }) => {
+export default function Display({ image }: Readonly<DisplayProps>) {
   const styles = useStyles();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [roast, setRoast] = useState<Roast | null>(null);
@@ -111,8 +104,7 @@ const Display: FC<DisplayProps> = ({ image }) => {
             alt="Captured"
             shadow
             shape="rounded"
-            className={styles.image}
-          />
+            className={styles.image} />
 
           <CardFooter>
             <Body1 as="p">
@@ -127,6 +119,4 @@ const Display: FC<DisplayProps> = ({ image }) => {
       )}
     </Card>
   );
-};
-
-export default Display;
+}
