@@ -1,0 +1,34 @@
+{
+  "name": "Mocking Mirror",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:9.0-bookworm",
+  // https://containers.dev/features
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {
+      "installBicep": true
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/powershell:1": {}
+  },
+
+  "postCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/scripts/install.sh",
+  "postStartCommand": "dotnet dev-certs https --trust",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-azuretools.vscode-azurestaticwebapps",
+        "ms-azuretools.vscode-bicep",
+        "ms-dotnettools.csdevkit"
+      ],
+      "settings": {
+        "editor.formatOnSave": true
+      }
+    }
+  },
+
+  "remoteUser": "root"
+}
