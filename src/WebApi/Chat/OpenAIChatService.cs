@@ -1,21 +1,13 @@
-﻿using Azure;
-using Azure.AI.OpenAI;
-
+﻿using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Options;
 
-using OpenAI.Chat;
+namespace VictorFrye.MockingMirror.WebApi.Chat;
 
-namespace VictorFrye.MockingMirror.WebApi.OpenAI;
-
-internal class OpenAIService(IOptions<OpenAIServiceOptions> options) : IOpenAIService
+public class OpenAIChatService(IChatClientFactory factory, IOptionsSnapshot<ChatClientSettings> options) : IChatService
 {
-    private readonly OpenAIServiceOptions _options = options.Value;
+    private IChatClient ChatClient => factory.Create(options.Value, ChatClientKind.OpenAI);
 
-    private AzureOpenAIClient Client => new(new Uri(_options.Endpoint), new AzureKeyCredential(_options.ApiKey));
-
-    private ChatClient ChatClient => Client.GetChatClient(_options.DeploymentName);
-
-    private const string Prompt =
+    private const string SystemPrompt =
         """
         You are a sentient mirror that interacts with users who stand in front of you.
 
@@ -38,31 +30,37 @@ internal class OpenAIService(IOptions<OpenAIServiceOptions> options) : IOpenAISe
           4. The 1980s called. They want their hair and shoulder pads back.
 
         Respond humorously to the picture of the user.
-
-        Here is the picture they provided:
         """;
 
-    private readonly ChatCompletionOptions ChatOptions = new()
+    private const string UserPrompt = "Here is the picture to roast me:";
+
+    private readonly ChatOptions ChatOptions = new()
     {
         Temperature = 1.2f,
-        MaxOutputTokenCount = 500,
+        MaxOutputTokens = 500,
     };
 
     public async Task<string> GetCompletion(
-        byte[] imageBytes,
+        IEnumerable<byte> imageBytes,
         string imageMime,
         CancellationToken cancellationToken = default)
     {
-        var imageData = BinaryData.FromBytes(imageBytes);
+        var imageData = BinaryData.FromBytes([.. imageBytes]);
 
         IEnumerable<ChatMessage> messages = [
-            new UserChatMessage(
-                ChatMessageContentPart.CreateTextPart(Prompt),
-                ChatMessageContentPart.CreateImagePart(imageData, imageMime))
-            ];
+            new ChatMessage(
+                ChatRole.System, SystemPrompt),
+            new ChatMessage(
+                ChatRole.User,
+                [
+                    new TextContent(UserPrompt),
+                    new DataContent(imageData, imageMime),
+                ]
+            )
+        ];
 
-        ChatCompletion completion = await ChatClient.CompleteChatAsync(messages, ChatOptions, cancellationToken);
+        ChatResponse response = await ChatClient.GetResponseAsync(messages, ChatOptions, cancellationToken);
 
-        return completion.Content[0].Text;
+        return string.Join('\n', response.Messages.Select(m => m.Text));
     }
 }

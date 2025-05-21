@@ -1,9 +1,10 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using Microsoft.OpenApi.Models;
 
 using VictorFrye.MockingMirror.Extensions.ServiceDefaults;
-using VictorFrye.MockingMirror.WebApi.OpenAI;
+using VictorFrye.MockingMirror.WebApi.Chat;
 using VictorFrye.MockingMirror.WebApi.Roasting;
 using VictorFrye.MockingMirror.WebApi.Speech;
 
@@ -18,23 +19,25 @@ builder.AddServiceDefaults();
 
 var config = builder.Configuration;
 
-builder.Services.AddOptions<OpenAIServiceOptions>()
-                .Bind(builder.Configuration.GetSection(OpenAIServiceOptions.ConfigurationSectionName))
+builder.Services.AddOptions<ChatClientSettings>()
+                .Bind(config.GetSection(ChatClientSettings.ConfigurationSectionName))
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-builder.Services.AddOptions<SpeechServiceOptions>()
-                .Bind(builder.Configuration.GetSection(SpeechServiceOptions.ConfigurationSectionName))
+builder.Services.AddOptions<SpeechClientSettings>()
+                .Bind(config.GetSection(SpeechClientSettings.ConfigurationSectionName))
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-builder.Services.AddScoped<IOpenAIService, OpenAIService>()
+builder.Services.AddScoped<IChatClientFactory, ChatClientFactory>()
+                .AddScoped<IChatService, OpenAIChatService>()
                 .AddScoped<ISpeechService, SpeechService>()
                 .AddScoped<IRoastService, RoastService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(static options =>
     {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         options.JsonSerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
         options.JsonSerializerOptions.AllowTrailingCommas = true;
     });

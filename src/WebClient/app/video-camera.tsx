@@ -35,11 +35,13 @@ const useStyles = makeStyles({
   },
 });
 
-interface CameraProps {
+interface VideoCameraProps {
   handleImageChanged: (src: string) => void;
 }
 
-export default function Camera({ handleImageChanged }: Readonly<CameraProps>) {
+export default function VideoCamera({
+  handleImageChanged,
+}: Readonly<VideoCameraProps>) {
   const styles = useStyles();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -100,22 +102,25 @@ export default function Camera({ handleImageChanged }: Readonly<CameraProps>) {
         ref={videoRef as any}
         className={styles.video}
         shadow
-        shape="rounded" />
+        shape="rounded"
+      />
       {/* eslint-enable @typescript-eslint/no-explicit-any */}
 
       <canvas ref={canvasRef} className={styles.canvas} />
 
       <CardFooter
         className={styles.footer}
-        action={<Button
-          as="button"
-          className={styles.button}
-          icon={<Camera16Regular />}
-          onClick={takeSnapshot}
-          appearance="primary"
-        >
-          Capture Image
-        </Button>}
+        action={
+          <Button
+            as="button"
+            className={styles.button}
+            icon={<Camera16Regular />}
+            onClick={takeSnapshot}
+            appearance="primary"
+          >
+            Capture Image
+          </Button>
+        }
       ></CardFooter>
     </Card>
   );

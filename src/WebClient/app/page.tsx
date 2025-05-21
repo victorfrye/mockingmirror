@@ -1,14 +1,11 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 
-import {
-  makeStyles,
-  tokens,
-} from '@fluentui/react-components';
+import { makeStyles, tokens } from '@fluentui/react-components';
 
-import Camera from '@mockingmirror/camera';
-import Display from '@mockingmirror/display';
+import RoastDisplay from '@mockingmirror/roast-display';
+import VideoCamera from '@mockingmirror/video-camera';
 
 const useStyles = makeStyles({
   main: {
@@ -30,9 +27,9 @@ const HomePage = () => {
 
   return (
     <main className={styles.main}>
-      <Camera handleImageChanged={onImageChanged} />
+      <VideoCamera handleImageChanged={onImageChanged} />
 
-      {image && <Display image={image} />}
+      {image && <RoastDisplay image={image} />}
     </main>
   );
 };

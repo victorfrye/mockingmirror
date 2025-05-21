@@ -2,8 +2,6 @@
 
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
 
-const baseUrl = process.env['NEXT_PUBLIC_API_BASEURL'];
-
 interface FetchState<T> {
   data: T | null;
   error: Error | null;
@@ -31,7 +29,7 @@ const reducer = <T>(
   }
 };
 
-const useFetch = <T>(url: string, request: RequestInit) => {
+export default function useFetch<T>(url: string, request: RequestInit) {
   const [state, dispatch] = useReducer<Reducer<FetchState<T>, FetchAction<T>>>(
     reducer,
     {
@@ -41,10 +39,10 @@ const useFetch = <T>(url: string, request: RequestInit) => {
     }
   );
 
-  const fetchData = useCallback((url: string, req: RequestInit) => {
+  const invokeFetch = useCallback((url: string, req: RequestInit) => {
     dispatch({ type: 'INIT' });
 
-    fetch(`${baseUrl}${url}`, req)
+    fetch(url, req)
       .then((response) =>
         response.ok
           ? response.json()
@@ -60,12 +58,8 @@ const useFetch = <T>(url: string, request: RequestInit) => {
   }, []);
 
   useEffect(() => {
-    console.log('Fetching data from: ', baseUrl + url);
-
-    fetchData(url, request);
-  }, [fetchData, url, request]);
+    invokeFetch(url, request);
+  }, [invokeFetch, url, request]);
 
   return state;
-};
-
-export default useFetch;
+}

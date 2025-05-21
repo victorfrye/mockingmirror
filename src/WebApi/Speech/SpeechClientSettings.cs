@@ -2,9 +2,9 @@
 
 namespace VictorFrye.MockingMirror.WebApi.Speech;
 
-internal class SpeechServiceOptions
+public class SpeechClientSettings
 {
-    public const string ConfigurationSectionName = nameof(SpeechServiceOptions);
+    public const string ConfigurationSectionName = nameof(SpeechClientSettings);
 
     [Required]
     public required string ApiKey { get; set; }

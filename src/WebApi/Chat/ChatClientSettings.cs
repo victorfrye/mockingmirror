@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VictorFrye.MockingMirror.WebApi.OpenAI;
+namespace VictorFrye.MockingMirror.WebApi.Chat;
 
-internal class OpenAIServiceOptions
+public class ChatClientSettings
 {
-    public const string ConfigurationSectionName = nameof(OpenAIServiceOptions);
+    public const string ConfigurationSectionName = nameof(ChatClientSettings);
 
     [Required]
     [Url]

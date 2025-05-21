@@ -1,6 +1,6 @@
 namespace VictorFrye.MockingMirror.WebApi.Roasting;
 
-internal interface IRoastService
+public interface IRoastService
 {
-    public Task<RoastResponse> AddRoast(RoastRequest request, CancellationToken cancellationToken);
+    Task<Roast> AddRoast(Roast roast, CancellationToken cancellationToken);
 }

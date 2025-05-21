@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Body1,
@@ -10,7 +10,9 @@ import {
   Spinner,
   makeStyles,
 } from '@fluentui/react-components';
-import useFetch from '@mockingmirror/use-fetch';
+
+import { Roast } from '@mockingmirror/types';
+import { usePostRoast } from '@mockingmirror/use-roast-api';
 
 const useStyles = makeStyles({
   card: {
@@ -27,43 +29,16 @@ const useStyles = makeStyles({
   },
 });
 
-interface Roast {
-  text: string;
-  speech: string | null;
-}
-
-interface RoastRequest {
-  imageBytes: string;
-}
-
-interface RoastResponse {
-  completionText: string;
-  speechBytes: string | null;
-}
-
-interface DisplayProps {
+interface RoastDisplayProps {
   image: string;
 }
 
-export default function Display({ image }: Readonly<DisplayProps>) {
+export default function RoastDisplay({ image }: Readonly<RoastDisplayProps>) {
   const styles = useStyles();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [roast, setRoast] = useState<Roast | null>(null);
 
-  const request: RequestInit = useMemo(
-    () => ({
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        imageBytes: image.split('base64,').pop(),
-      } as RoastRequest),
-    }),
-    [image]
-  );
-  const { data, error, loading } = useFetch<RoastResponse>('/roasts', request);
+  const { response, error, loading } = usePostRoast(image);
 
   const playSpeech = useCallback(() => {
     if (audioRef.current) {
@@ -80,13 +55,13 @@ export default function Display({ image }: Readonly<DisplayProps>) {
   }, [roast]);
 
   useEffect(() => {
-    if (data) {
+    if (response) {
       setRoast({
-        text: data.completionText,
-        speech: data.speechBytes,
+        text: response.completionText,
+        speech: response.speechBytes,
       });
     }
-  }, [data]);
+  }, [response]);
 
   useEffect(() => {
     playSpeech();
@@ -104,7 +79,8 @@ export default function Display({ image }: Readonly<DisplayProps>) {
             alt="Captured"
             shadow
             shape="rounded"
-            className={styles.image} />
+            className={styles.image}
+          />
 
           <CardFooter>
             <Body1 as="p">

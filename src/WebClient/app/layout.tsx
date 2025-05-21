@@ -3,14 +3,14 @@ import { ReactNode } from 'react';
 import { Metadata } from 'next';
 
 import Frame from '@mockingmirror/frame';
-import { DarkModeProvider, ThemeProvider } from '@mockingmirror/theme';
 import '@mockingmirror/globals.css';
+import { DarkModeProvider, ThemeProvider } from '@mockingmirror/theme';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mockingmirror.com'),
   title: 'Mocking Mirror | Telling you how you really look',
   description:
-    "Mocking Mirror is the only mirror that tells you how you really look: like a clown.",
+    'Mocking Mirror is the only mirror that tells you how you really look: like a clown.',
   keywords: [
     'mocking mirror',
     'mirror',

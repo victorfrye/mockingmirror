@@ -1,6 +1,6 @@
 ﻿namespace VictorFrye.MockingMirror.WebApi.Speech;
 
-internal interface ISpeechService
+public interface ISpeechService
 {
-    Task<byte[]> GetSpeech(string text);
+    Task<IEnumerable<byte>> GetSpeech(string text);
 }
