@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import useFetch from './use-fetch';
 import {
   Body1,
   Card,
@@ -12,7 +13,6 @@ import {
 } from '@fluentui/react-components';
 
 import { Roast } from '@mockingmirror/types';
-import useRoastApi from '@mockingmirror/use-roast-api';
 
 const useStyles = makeStyles({
   card: {
@@ -29,16 +29,48 @@ const useStyles = makeStyles({
   },
 });
 
+export interface RoastRequest {
+  imageBytes: string;
+}
+
+export interface RoastResponse {
+  completionText: string;
+  speechBytes?: string;
+}
+
 interface RoastDisplayProps {
   image: string;
 }
+
+const baseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export default function RoastDisplay({ image }: Readonly<RoastDisplayProps>) {
   const styles = useStyles();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [roast, setRoast] = useState<Roast | null>(null);
 
-  const { postRoast, response, error, loading } = useRoastApi();
+  const request: RoastRequest = useMemo(
+    () => ({
+      imageBytes: image?.split('base64,').pop() ?? '',
+    }),
+    [image]
+  );
+
+  const init: RequestInit = useMemo(() => {
+    return {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    };
+  }, [request]);
+
+  const { data, error, loading } = useFetch<RoastResponse>(
+    `${baseUrl}/roasts`,
+    init
+  );
 
   const playSpeech = useCallback(() => {
     if (audioRef.current) {
@@ -55,19 +87,13 @@ export default function RoastDisplay({ image }: Readonly<RoastDisplayProps>) {
   }, [roast]);
 
   useEffect(() => {
-    if (loading) {
-      postRoast(image);
-    }
-  }, [image, loading, postRoast]);
-
-  useEffect(() => {
-    if (response) {
+    if (data) {
       setRoast({
-        text: response.completionText,
-        speech: response.speechBytes,
+        text: data.completionText,
+        speech: data.speechBytes,
       });
     }
-  }, [response]);
+  }, [data]);
 
   useEffect(() => {
     playSpeech();

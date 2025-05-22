@@ -11,6 +11,8 @@ public static class ChatClientBuilderExtensions
             throw new InvalidOperationException($"Invalid connection string: {connectionString} Expected format: Endpoint=<endpoint>;ApiKey=<api-key>;Model=<model>;Provider=<ollama/openai>;");
         }
 
+        builder.AddAzureOpenAIClient(connectionName).AddChatClient(settings.Model);
+
         var _ = settings.Provider switch
         {
             ChatProvider.Ollama => builder.AddOllamaApiClient(connectionName).AddChatClient(),

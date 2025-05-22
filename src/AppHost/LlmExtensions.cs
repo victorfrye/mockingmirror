@@ -2,11 +2,7 @@ namespace VictorFrye.MockingMirror.AppHost;
 
 public static class LlmExtensions
 {
-    public static IResourceBuilder<LlmResource> AddLlm(this IDistributedApplicationBuilder builder, string name)
-    {
-        var model = new LlmResource(name);
-        return builder.CreateResourceBuilder(model);
-    }
+    public static IResourceBuilder<LlmResource> AddLlm(this IDistributedApplicationBuilder builder, string name) => builder.CreateResourceBuilder(new LlmResource(name));
 
     public static IResourceBuilder<LlmResource> RunAsOllama(this IResourceBuilder<LlmResource> builder, string model, Action<IResourceBuilder<OllamaResource>>? configure = null)
     {

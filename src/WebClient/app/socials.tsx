@@ -45,7 +45,8 @@ export default function Socials() {
             src={isDark ? '/images/github.svg' : '/images/github_dark.svg'}
             alt="GitHub"
             height={20}
-            width={20} />
+            width={20}
+          />
         ),
       },
     ];
@@ -63,7 +64,8 @@ export default function Socials() {
         href={social.href}
         target="_blank"
         rel="me noreferrer noopener"
-        key={social.href} />
+        key={social.href}
+      />
     ));
   };
 

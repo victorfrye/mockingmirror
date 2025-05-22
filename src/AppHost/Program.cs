@@ -1,14 +1,16 @@
-using VictorFrye.MockingMirror.AppHost;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
-var llm = builder.AddLlm("llm")
-                 .RunAsOllama("phi4", static c => c.WithLifetime(ContainerLifetime.Persistent))
-                 .PublishAsOpenAI("gpt-4o", "2024-10-01");
+var openai = builder.AddAzureOpenAI("openai")
+                    .AddDeployment("gpt-4o", "gpt-4o", "2024-11-20");
+
+// var llm = builder.AddLlm("llm")
+//               //    .RunAsOllama("phi4-mini", static c => c.WithLifetime(ContainerLifetime.Persistent))
+//                  .RunAsOpenAI("gpt-4o", "2024-11-20")
+//                  .PublishAsOpenAI("gpt-4o", "2024-11-20");
 
 var api = builder.AddProject<Projects.WebApi>("api")
-                 .WithReference(llm)
-                 .WaitFor(llm)
+                 .WithReference(openai)
+                 .WaitFor(openai)
                  .WithHttpHealthCheck("/alive")
                  .WithExternalHttpEndpoints();
 
