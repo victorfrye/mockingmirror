@@ -12,7 +12,7 @@ import {
 } from '@fluentui/react-components';
 
 import { Roast } from '@mockingmirror/types';
-import { usePostRoast } from '@mockingmirror/use-roast-api';
+import useRoastApi from '@mockingmirror/use-roast-api';
 
 const useStyles = makeStyles({
   card: {
@@ -38,7 +38,7 @@ export default function RoastDisplay({ image }: Readonly<RoastDisplayProps>) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [roast, setRoast] = useState<Roast | null>(null);
 
-  const { response, error, loading } = usePostRoast(image);
+  const { postRoast, response, error, loading } = useRoastApi();
 
   const playSpeech = useCallback(() => {
     if (audioRef.current) {
@@ -53,6 +53,12 @@ export default function RoastDisplay({ image }: Readonly<RoastDisplayProps>) {
       });
     }
   }, [roast]);
+
+  useEffect(() => {
+    if (loading) {
+      postRoast(image);
+    }
+  }, [image, loading, postRoast]);
 
   useEffect(() => {
     if (response) {

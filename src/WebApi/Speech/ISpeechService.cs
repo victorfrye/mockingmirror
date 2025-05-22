@@ -2,5 +2,5 @@
 
 public interface ISpeechService
 {
-    Task<IEnumerable<byte>> GetSpeech(string text);
+    Task<byte[]> GetSpeech(string text);
 }

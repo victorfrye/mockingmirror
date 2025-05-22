@@ -1,17 +1,14 @@
 using Microsoft.Extensions.AI;
-using Microsoft.Extensions.Options;
 
-using VictorFrye.MockingMirror.WebApi.Chat;
+using VictorFrye.MockingMirror.WebApi.ChatCompletion;
 
-namespace VictorFrye.MockingMirror.WebApi.Tests.Chat;
+namespace VictorFrye.MockingMirror.WebApi.Tests.ChatCompletion;
 
 public class OpenAIChatServiceTests
 {
-    private readonly Mock<IChatClientFactory> _factoryMock = new();
     private readonly Mock<IChatClient> _chatClient = new();
-    private readonly Mock<IOptionsSnapshot<ChatClientSettings>> _optionsMock = new();
 
-    private OpenAIChatService Sut => new(_factoryMock.Object, _optionsMock.Object);
+    private ChatService Sut => new(_chatClient.Object);
 
     [Fact]
     public async Task GetCompletionWithSingleMessageResponseReturnsString()
@@ -21,9 +18,6 @@ public class OpenAIChatServiceTests
         var expectedSettings = FakeChatClientSettings.Build();
         var expectedCompletion = new Faker().Lorem.Sentences();
 
-        _optionsMock.SetupGet(x => x.Value).Returns(expectedSettings);
-        _factoryMock.Setup(x => x.Create(It.IsAny<ChatClientSettings>(), ChatClientKind.OpenAI))
-                    .Returns(_chatClient.Object);
         _chatClient.Setup(x => x.GetResponseAsync(It.IsAny<IEnumerable<ChatMessage>>(), It.IsAny<ChatOptions>(), It.IsAny<CancellationToken>()))
                    .ReturnsAsync(new ChatResponse(
                    [
@@ -31,12 +25,6 @@ public class OpenAIChatServiceTests
                    ]));
 
         var actualCompletion = await Sut.GetCompletion(expectedImageBytes, expectedImageMime, TestContext.Current.CancellationToken);
-
-        _optionsMock.Verify(x => x.Value, Times.Once());
-        _optionsMock.VerifyNoOtherCalls();
-
-        _factoryMock.Verify(x => x.Create(expectedSettings, ChatClientKind.OpenAI), Times.Once());
-        _factoryMock.VerifyNoOtherCalls();
 
         _chatClient.Verify(x => x.GetResponseAsync(It.IsAny<IEnumerable<ChatMessage>>(), It.IsAny<ChatOptions>(), It.IsAny<CancellationToken>()), Times.Once());
         _chatClient.VerifyNoOtherCalls();
@@ -54,19 +42,10 @@ public class OpenAIChatServiceTests
         var expectedSettings = FakeChatClientSettings.Build();
         IEnumerable<string> expectedCompletions = [new Faker().Lorem.Sentences(), new Faker().Lorem.Sentences()];
 
-        _optionsMock.SetupGet(x => x.Value).Returns(expectedSettings);
-        _factoryMock.Setup(x => x.Create(It.IsAny<ChatClientSettings>(), ChatClientKind.OpenAI))
-                    .Returns(_chatClient.Object);
         _chatClient.Setup(x => x.GetResponseAsync(It.IsAny<IEnumerable<ChatMessage>>(), It.IsAny<ChatOptions>(), It.IsAny<CancellationToken>()))
                    .ReturnsAsync(new ChatResponse([.. expectedCompletions.Select(c => new ChatMessage(ChatRole.Assistant, c))]));
 
         var actualCompletion = await Sut.GetCompletion(expectedImageBytes, expectedImageMime, TestContext.Current.CancellationToken);
-
-        _optionsMock.Verify(x => x.Value, Times.Once());
-        _optionsMock.VerifyNoOtherCalls();
-
-        _factoryMock.Verify(x => x.Create(expectedSettings, ChatClientKind.OpenAI), Times.Once());
-        _factoryMock.VerifyNoOtherCalls();
 
         _chatClient.Verify(x => x.GetResponseAsync(It.IsAny<IEnumerable<ChatMessage>>(), It.IsAny<ChatOptions>(), It.IsAny<CancellationToken>()), Times.Once());
         _chatClient.VerifyNoOtherCalls();

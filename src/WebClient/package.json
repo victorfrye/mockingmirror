@@ -14,7 +14,6 @@
     "@fluentui/react-components": "^9.64.0",
     "@fluentui/react-icons": "^2.0.300",
     "@griffel/react": "^1.5.30",
-    "fluentui-next-appdir-directive": "^0.2.0",
     "next": "^15.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

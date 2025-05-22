@@ -1,4 +1,4 @@
-using VictorFrye.MockingMirror.WebApi.Chat;
+using VictorFrye.MockingMirror.WebApi.ChatCompletion;
 using VictorFrye.MockingMirror.WebApi.Roasting;
 using VictorFrye.MockingMirror.WebApi.Speech;
 
@@ -9,7 +9,7 @@ public class RoastServiceTests
     private readonly Mock<IChatService> _chatServiceMock = new();
     private readonly Mock<ISpeechService> _speechServiceMock = new();
 
-    private RoastService Sut => new(_chatServiceMock.Object, _speechServiceMock.Object);
+    private RoastService Sut => new(_chatServiceMock.Object);
 
     [Fact]
     public async Task AddRoastWithoutSpeechReturnsTextOnlyResult()
@@ -17,7 +17,7 @@ public class RoastServiceTests
         var expectedRoast = FakeRoast.Build(includeSpeech: false);
         Assert.False(expectedRoast.IncludeSpeech);
 
-        _chatServiceMock.Setup(x => x.GetCompletion(It.IsAny<IEnumerable<byte>>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        _chatServiceMock.Setup(x => x.GetCompletion(It.IsAny<byte[]>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                         .ReturnsAsync(new Faker().Lorem.Sentences(3));
 
         var actualRoast = await Sut.AddRoast(expectedRoast, TestContext.Current.CancellationToken);
@@ -44,7 +44,7 @@ public class RoastServiceTests
         var expectedRoast = FakeRoast.Build(includeSpeech: true);
         Assert.True(expectedRoast.IncludeSpeech);
 
-        _chatServiceMock.Setup(x => x.GetCompletion(It.IsAny<IEnumerable<byte>>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        _chatServiceMock.Setup(x => x.GetCompletion(It.IsAny<byte[]>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                         .ReturnsAsync(new Faker().Lorem.Sentences(3));
         _speechServiceMock.Setup(x => x.GetSpeech(It.IsAny<string>()))
                           .ReturnsAsync(new Faker().Random.Bytes(100));

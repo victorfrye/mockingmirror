@@ -1,9 +1,9 @@
-using VictorFrye.MockingMirror.WebApi.Chat;
+using VictorFrye.MockingMirror.WebApi.ChatCompletion;
 using VictorFrye.MockingMirror.WebApi.Speech;
 
 namespace VictorFrye.MockingMirror.WebApi.Roasting;
 
-public class RoastService(IChatService chatService, ISpeechService speechService) : IRoastService
+public class RoastService(IChatService chatService) : IRoastService
 {
     public async Task<Roast> AddRoast(Roast roast, CancellationToken cancellationToken)
     {
@@ -11,7 +11,7 @@ public class RoastService(IChatService chatService, ISpeechService speechService
 
         if (roast.IncludeSpeech)
         {
-            roast.SpeechBytes = await speechService.GetSpeech(roast.CompletionText);
+            // roast.SpeechBytes = await speechService.GetSpeech(roast.CompletionText);
         }
 
         return roast;

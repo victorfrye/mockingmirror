@@ -1,10 +1,10 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import useFetch from '@mockingmirror/use-fetch';
 
-const baseUrl = process.env['NEXT_PUBLIC_API_BASEURL'];
+const baseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export interface RoastRequest {
   imageBytes: string;
@@ -15,10 +15,12 @@ export interface RoastResponse {
   speechBytes?: string;
 }
 
-export function usePostRoast(image: string) {
+export default function useRoastApi() {
+  const [image, setImage] = useState<string | null>(null);
+
   const request: RoastRequest = useMemo(
     () => ({
-      imageBytes: image.split('base64,').pop() ?? '',
+      imageBytes: image?.split('base64,').pop() ?? '',
     }),
     [image]
   );
@@ -35,5 +37,9 @@ export function usePostRoast(image: string) {
     }
   );
 
-  return { response: data, error, loading };
+  const postRoast = useCallback((img: string) => {
+    setImage(img);
+  }, []);
+
+  return { postRoast, response: data, error, loading };
 }

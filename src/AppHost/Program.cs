@@ -1,7 +1,15 @@
+using VictorFrye.MockingMirror.AppHost;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
+var llm = builder.AddLlm("llm")
+                 .RunAsOllama("phi4", static c => c.WithLifetime(ContainerLifetime.Persistent))
+                 .PublishAsOpenAI("gpt-4o", "2024-10-01");
+
 var api = builder.AddProject<Projects.WebApi>("api")
-                 .WithHttpsHealthCheck("/alive")
+                 .WithReference(llm)
+                 .WaitFor(llm)
+                 .WithHttpHealthCheck("/alive")
                  .WithExternalHttpEndpoints();
 
 builder.AddNpmApp("client", "../WebClient", "dev")

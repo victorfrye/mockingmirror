@@ -4,7 +4,7 @@ internal static class RoastEndpoints
 {
     internal const string BasePath = "/roasts";
 
-    internal static void MapRoastingEndpoints(this WebApplication app)
+    internal static void MapRoastEndpoints(this WebApplication app)
     {
         app.MapPost(BasePath, PostRoast);
     }

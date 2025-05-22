@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
 
 using VictorFrye.MockingMirror.Extensions.ServiceDefaults;
-using VictorFrye.MockingMirror.WebApi.Chat;
+using VictorFrye.MockingMirror.WebApi.ChatCompletion;
 using VictorFrye.MockingMirror.WebApi.Roasting;
 using VictorFrye.MockingMirror.WebApi.Speech;
 
@@ -16,21 +16,21 @@ builder.Services.AddCors(static options =>
               .AllowAnyHeader()));
 
 builder.AddServiceDefaults();
+builder.AddChatClient("llm");
 
 var config = builder.Configuration;
 
-builder.Services.AddOptions<ChatClientSettings>()
-                .Bind(config.GetSection(ChatClientSettings.ConfigurationSectionName))
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+// builder.Services.AddOptions<ChatClientSettings>()
+//                 .Bind(config.GetSection(ChatClientSettings.ConfigurationSectionName))
+//                 .ValidateDataAnnotations()
+//                 .ValidateOnStart();
 
-builder.Services.AddOptions<SpeechClientSettings>()
-                .Bind(config.GetSection(SpeechClientSettings.ConfigurationSectionName))
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+// builder.Services.AddOptions<SpeechClientSettings>()
+//                 .Bind(config.GetSection(SpeechClientSettings.ConfigurationSectionName))
+//                 .ValidateDataAnnotations()
+//                 .ValidateOnStart();
 
-builder.Services.AddScoped<IChatClientFactory, ChatClientFactory>()
-                .AddScoped<IChatService, OpenAIChatService>()
+builder.Services.AddScoped<IChatService, ChatService>()
                 .AddScoped<ISpeechService, SpeechService>()
                 .AddScoped<IRoastService, RoastService>();
 
@@ -69,7 +69,7 @@ app.MapDefaultEndpoints();
 app.MapOpenApi()
    .CacheOutput();
 
-app.MapRoastingEndpoints();
+app.MapRoastEndpoints();
 
 app.UseHttpsRedirection();
 

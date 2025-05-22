@@ -1,6 +1,6 @@
-using VictorFrye.MockingMirror.WebApi.Chat;
+using VictorFrye.MockingMirror.WebApi.ChatCompletion;
 
-namespace VictorFrye.MockingMirror.WebApi.Tests.Chat;
+namespace VictorFrye.MockingMirror.WebApi.Tests.ChatCompletion;
 
 internal class FakeChatClientSettings
 {
@@ -8,6 +8,7 @@ internal class FakeChatClientSettings
             .StrictMode(true)
             .RuleFor(o => o.Endpoint, f => f.Internet.Url())
             .RuleFor(o => o.ApiKey, f => f.Internet.Password())
-            .RuleFor(o => o.DeploymentName, f => f.Lorem.Slug())
+            .RuleFor(o => o.Model, f => f.Lorem.Slug())
+            .RuleFor(o => o.Provider, f => f.PickRandom<ChatProvider>())
             .Generate();
 }

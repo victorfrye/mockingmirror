@@ -11,7 +11,7 @@ public class SpeechService(IOptionsSnapshot<SpeechClientSettings> options) : ISp
     private const string VoiceName = "en-US-AvaMultilingualNeural";
     private readonly SpeechSynthesisOutputFormat OutputFormat = SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm;
 
-    public async Task<IEnumerable<byte>> GetSpeech(string text)
+    public async Task<byte[]> GetSpeech(string text)
     {
         var config = Config;
 

@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.AI;
-using Microsoft.Extensions.Options;
 
-namespace VictorFrye.MockingMirror.WebApi.Chat;
+namespace VictorFrye.MockingMirror.WebApi.ChatCompletion;
 
-public class OpenAIChatService(IChatClientFactory factory, IOptionsSnapshot<ChatClientSettings> options) : IChatService
+public class ChatService(IChatClient client) : IChatService
 {
-    private IChatClient ChatClient => factory.Create(options.Value, ChatClientKind.OpenAI);
-
     private const string SystemPrompt =
         """
         You are a sentient mirror that interacts with users who stand in front of you.
@@ -41,11 +38,11 @@ public class OpenAIChatService(IChatClientFactory factory, IOptionsSnapshot<Chat
     };
 
     public async Task<string> GetCompletion(
-        IEnumerable<byte> imageBytes,
+        byte[] imageBytes,
         string imageMime,
         CancellationToken cancellationToken = default)
     {
-        var imageData = BinaryData.FromBytes([.. imageBytes]);
+        var imageData = BinaryData.FromBytes(imageBytes);
 
         IEnumerable<ChatMessage> messages = [
             new ChatMessage(
@@ -59,7 +56,7 @@ public class OpenAIChatService(IChatClientFactory factory, IOptionsSnapshot<Chat
             )
         ];
 
-        ChatResponse response = await ChatClient.GetResponseAsync(messages, ChatOptions, cancellationToken);
+        ChatResponse response = await client.GetResponseAsync(messages, ChatOptions, cancellationToken);
 
         return string.Join('\n', response.Messages.Select(m => m.Text));
     }
