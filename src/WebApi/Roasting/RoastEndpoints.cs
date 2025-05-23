@@ -1,18 +1,30 @@
 namespace VictorFrye.MockingMirror.WebApi.Roasting;
 
-internal static class RoastEndpoints
+/// <summary>
+/// Provides extension methods for adding <see cref="RouteEndpoint"/>s related to roasting in the <see cref="WebApplication"/>.
+/// </summary>
+public static class RoastEndpoints
 {
-    internal static void MapRoastingEndpoints(this WebApplication app)
+    internal const string BasePath = "/roasts";
+
+    /// <summary>
+    /// Register endpoints onto the current application for generating roasts using AI.
+    /// </summary>
+    /// <param name="app">The <see cref="WebApplication"/> to register the endpoints on.</param>
+    public static void MapRoastEndpoints(this WebApplication app)
     {
-        app.MapPostRoastEndpoint();
+        app.MapPost(BasePath, PostRoast);
     }
 
-    private static void MapPostRoastEndpoint(this WebApplication app)
+    /// <summary>
+    /// The delegate for the POST endpoint to create a new roast.
+    /// </summary>
+    /// <param name="service">The <see cref="IRoastService"/> to orchestrate and control flow for roasting.</param>
+    /// <param name="request">The <see cref="RoastRequest"/> containing the image data to roast.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> to monitor for cancellation requests. The default is <see cref="CancellationToken.None"/>.
+    public static async Task<IResult> PostRoast(IRoastService service, RoastRequest request, CancellationToken cancellationToken)
     {
-        app.MapPost("/roasts", async (IRoastService service, RoastRequest request, CancellationToken cancellationToken) =>
-        {
-            var response = await service.AddRoast(request, cancellationToken);
-            return Results.Created($"/roasts/{response.Id}", response);
-        });
+        var response = await service.AddRoast(request, cancellationToken);
+        return Results.Created($"{BasePath}/{response.Id}", response);
     }
 }

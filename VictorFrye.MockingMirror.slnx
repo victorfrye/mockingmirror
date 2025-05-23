@@ -16,4 +16,5 @@
     <Build />
     <Deploy />
   </Project>
+  <Project Path="test/WebApi/WebApi.Tests.csproj" />
 </Solution>

@@ -3,16 +3,32 @@ using Microsoft.Extensions.Options;
 
 namespace VictorFrye.MockingMirror.WebApi.Speech;
 
-internal class SpeechService(IOptions<SpeechServiceOptions> options) : ISpeechService
+/// <summary>
+/// Represents a service that provides AI text-to-speech functionality.
+/// </summary>
+public interface ISpeechService
 {
-    private readonly SpeechServiceOptions _options = options.Value;
+    /// <summary>
+    /// Get synthesized speech from the provided <paramref name="text"/>.
+    /// </summary>
+    /// <param name="text">The text to synthesize into speech.</param>
+    /// <returns>A <see cref="byte[]"> containing the synthesized speech data.</returns>
+    Task<byte[]> GetSpeech(string text);
+}
 
-    private SpeechConfig Config => SpeechConfig.FromSubscription(_options.ApiKey, _options.Region);
+/// <summary>
+/// The <see cref="SpeechService"/> implementation that uses the Azure Cognitive Services Speech SDK to synthesize speech from text.
+/// </summary>
+/// <param name="options">The <see cref="IOptions{T}"/> containing the speech client settings.</param>
+public class SpeechService(IOptions<SpeechClientSettings> options) : ISpeechService
+{
+    private SpeechConfig Config => SpeechConfig.FromSubscription(options.Value.ApiKey, options.Value.Region);
 
     private const string Language = "en-US";
     private const string VoiceName = "en-US-AvaMultilingualNeural";
     private readonly SpeechSynthesisOutputFormat OutputFormat = SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm;
 
+    /// <inheritdoc/>
     public async Task<byte[]> GetSpeech(string text)
     {
         var config = Config;

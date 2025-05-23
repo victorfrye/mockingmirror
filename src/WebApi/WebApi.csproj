@@ -6,15 +6,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <AssemblyName>VictorFrye.MockingMirror.WebApi</AssemblyName>
-	  <RootNamespace>VictorFrye.MockingMirror.WebApi</RootNamespace>
+    <RootNamespace>VictorFrye.MockingMirror.WebApi</RootNamespace>
 
-	  <UserSecretsId>e122d9a7-f443-45da-8b92-2fbcd92d387e</UserSecretsId>
+    <UserSecretsId>e122d9a7-f443-45da-8b92-2fbcd92d387e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Azure.AI.OpenAI" Version="9.3.0-preview.1.25265.20" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
     <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.42.0" />
+    <PackageReference Include="Microsoft.Extensions.AI" Version="9.5.0" />
+    <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="9.5.0-preview.1.25265.7" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,22 @@
-﻿namespace VictorFrye.MockingMirror.WebApi.Roasting;
+namespace VictorFrye.MockingMirror.WebApi.Roasting;
 
-public class RoastResponse
+/// <summary>
+/// Represents a generated roast response.
+/// </summary>
+public record RoastResponse
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
+    /// <summary>
+    /// The unique <see cref="Guid"/> identifier for the roast.
+    /// </summary>
+    public Guid Id { get; init; } = Guid.NewGuid();
 
-    public required string CompletionText { get; set; }
+    /// <summary>
+    /// The generated roast completion text by the downstream chat client.
+    /// </summary>
+    public string CompletionText { get; set; } = string.Empty;
 
+    /// <summary>
+    /// The byte data of the generated text-to-speech audio for the roast completion.
+    /// </summary>
     public byte[]? SpeechBytes { get; set; } = null;
 }
