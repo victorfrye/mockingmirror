@@ -1,16 +1,20 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var openai = builder.AddAzureOpenAI("openai")
-                    .AddDeployment("gpt-4o", "gpt-4o", "2024-11-20");
+var oaiName = builder.AddParameter("OpenAIName");
+var oaiResourceGroup = builder.AddParameter("OpenAIResourceGroup");
+var oaiModel = builder.AddParameter("OpenAIModel");
+var speechKey = builder.AddParameter("SpeechKey", secret: true);
+var speechRegion = builder.AddParameter("SpeechRegion");
 
-// var llm = builder.AddLlm("llm")
-//               //    .RunAsOllama("phi4-mini", static c => c.WithLifetime(ContainerLifetime.Persistent))
-//                  .RunAsOpenAI("gpt-4o", "2024-11-20")
-//                  .PublishAsOpenAI("gpt-4o", "2024-11-20");
+var openai = builder.AddAzureOpenAI("openai")
+                    .AsExisting(oaiName, oaiResourceGroup);
 
 var api = builder.AddProject<Projects.WebApi>("api")
                  .WithReference(openai)
                  .WaitFor(openai)
+                 .WithEnvironment("ChatClientSettings__DeploymentName", oaiModel)
+                 .WithEnvironment("SpeechClientSettings__ApiKey", speechKey)
+                 .WithEnvironment("SpeechClientSettings__Region", speechRegion)
                  .WithHttpHealthCheck("/alive")
                  .WithExternalHttpEndpoints();
 

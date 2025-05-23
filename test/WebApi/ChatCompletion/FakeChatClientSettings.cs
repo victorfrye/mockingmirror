@@ -4,11 +4,10 @@ namespace VictorFrye.MockingMirror.WebApi.Tests.ChatCompletion;
 
 internal class FakeChatClientSettings
 {
-    public static ChatClientSettings Build() => new Faker<ChatClientSettings>()
+    internal static ChatClientSettings Build() => new Faker<ChatClientSettings>()
             .StrictMode(true)
-            .RuleFor(o => o.Endpoint, f => f.Internet.Url())
-            .RuleFor(o => o.ApiKey, f => f.Internet.Password())
-            .RuleFor(o => o.Model, f => f.Lorem.Slug())
-            .RuleFor(o => o.Provider, f => f.PickRandom<ChatProvider>())
+            .RuleFor(x => x.Endpoint, f => new Uri(f.Internet.Url()))
+            .RuleFor(x => x.ApiKey, f => f.Internet.Password())
+            .RuleFor(x => x.DeploymentName, f => f.Lorem.Slug())
             .Generate();
 }

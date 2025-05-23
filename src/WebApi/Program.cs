@@ -16,23 +16,10 @@ builder.Services.AddCors(static options =>
               .AllowAnyHeader()));
 
 builder.AddServiceDefaults();
-builder.AddChatClient("llm");
 
-var config = builder.Configuration;
-
-// builder.Services.AddOptions<ChatClientSettings>()
-//                 .Bind(config.GetSection(ChatClientSettings.ConfigurationSectionName))
-//                 .ValidateDataAnnotations()
-//                 .ValidateOnStart();
-
-// builder.Services.AddOptions<SpeechClientSettings>()
-//                 .Bind(config.GetSection(SpeechClientSettings.ConfigurationSectionName))
-//                 .ValidateDataAnnotations()
-//                 .ValidateOnStart();
-
-builder.Services.AddScoped<IChatService, ChatService>()
-                .AddScoped<ISpeechService, SpeechService>()
-                .AddScoped<IRoastService, RoastService>();
+builder.AddChatCompletionServices()
+       .AddSpeechServices()
+       .AddRoastingServices();
 
 builder.Services.AddControllers()
     .AddJsonOptions(static options =>

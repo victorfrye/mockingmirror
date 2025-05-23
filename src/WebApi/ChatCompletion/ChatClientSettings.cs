@@ -1,64 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace VictorFrye.MockingMirror.WebApi.ChatCompletion;
 
-public class ChatClientSettings
+/// <summary>
+/// The settings relevant to accessing the chat client.
+/// </summary>
+public sealed class ChatClientSettings
 {
-    public const string ConfigurationSectionName = nameof(ChatClientSettings);
+    internal const string ConfigurationSectionName = nameof(ChatClientSettings);
 
+    /// <summary>
+    /// Gets or sets a <see cref="Uri"/> referencing the endpoint of the chat client.
+    /// For Azure OpenAI, this might look like "https://{{account_name}}.openai.azure.com/".
+    /// </summary>
     [Url]
-    public string? Endpoint { get; set; }
+    public Uri? Endpoint { get; set; }
 
+    /// <summary>
+    /// Gets or sets the key to use to authenticate to the chat client endpoint.
+    /// </summary>
     public string? ApiKey { get; set; }
 
-    public required string Model { get; set; }
-
-    public required ChatProvider Provider { get; set; } = ChatProvider.Unknown;
-
-    public static bool TryParse(string? connectionString, [NotNullWhen(true)] out ChatClientSettings? settings)
-    {
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            settings = null;
-            return false;
-        }
-
-        var span = connectionString.AsSpan();
-        var settingsDictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-        foreach (var range in span.Split(';'))
-        {
-            var part = span[range];
-            var index = part.IndexOf('=');
-
-            if (index <= 0 || index == part.Length - 1)
-            {
-                continue;
-            }
-
-            var key = part[.. index].Trim();
-            var value = part[(index + 1) ..].Trim();
-            settingsDictionary[key.ToString()] = value.ToString();
-        }
-
-        settingsDictionary.TryGetValue(nameof(Endpoint), out var endpoint);
-        settingsDictionary.TryGetValue(nameof(ApiKey), out var apiKey);
-
-        if (!settingsDictionary.TryGetValue(nameof(Model), out var model)
-            || !settingsDictionary.TryGetValue(nameof(Provider), out var provider))
-        {
-            settings = null;
-            return false;
-        }
-
-        settings = new ChatClientSettings
-        {
-            Endpoint = endpoint,
-            ApiKey = apiKey,
-            Model = model,
-            Provider = Enum.TryParse<ChatProvider>(provider, ignoreCase: true, out var parsedProvider) ? parsedProvider : ChatProvider.Unknown
-        };
-        return true;
-    }
+    /// <summary>
+    /// Gets or sets the name of the deployed model to use for the chat client.
+    /// </summary>
+    public string? DeploymentName { get; set; }
 }

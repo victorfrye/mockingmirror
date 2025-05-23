@@ -96,7 +96,9 @@ export default function VideoCamera({
 
   return (
     <Card className={styles.card} appearance="filled-alternative">
-      {/* eslint-disable @typescript-eslint/no-explicit-any */}
+      {/* NOTE: The following are workarounds to force video element to match Fluent UI image styling */}
+      {/* eslint-disable @typescript-eslint/no-explicit-any  */}
+      {/* eslint-disable-next-line jsx-a11y/alt-text */}
       <Image
         as={'video' as any}
         ref={videoRef as any}

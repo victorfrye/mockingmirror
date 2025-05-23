@@ -66,7 +66,8 @@ export default function Footer() {
         checked={isDark}
         onChange={handleDarkModeToggled}
         label={isDark ? 'Dark Mode' : 'Light Mode'}
-        className={styles.switch} />
+        className={styles.switch}
+      />
 
       <Caption1 as="p" align="end" block className={styles.copyright}>
         © Victor Frye {_today.getFullYear()}

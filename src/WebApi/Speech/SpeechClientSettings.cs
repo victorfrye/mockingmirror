@@ -1,14 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace VictorFrye.MockingMirror.WebApi.Speech;
 
-namespace VictorFrye.MockingMirror.WebApi.Speech;
-
-public class SpeechClientSettings
+/// <summary>
+/// The settings relevant to accessing the speech client.
+/// /// </summary>
+public sealed class SpeechClientSettings
 {
-    public const string ConfigurationSectionName = nameof(SpeechClientSettings);
+    internal const string ConfigurationSectionName = nameof(SpeechClientSettings);
 
-    [Required]
-    public required string ApiKey { get; set; }
+    /// <summary>
+    /// Gets or sets the key used to authenticate to the speech client endpoint.
+    /// </summary>
+    public string? ApiKey { get; set; }
 
-    [Required]
-    public required string Region { get; set; }
+    /// <summary>
+    /// Gets or sets the region of the speech client.
+    /// </summary>
+    public string? Region { get; set; }
 }
