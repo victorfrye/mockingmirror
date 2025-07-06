@@ -1,0 +1,27 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  # Maintain dependencies for NuGet
+  - package-ecosystem: 'nuget'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels: ['📦 Issue-Dependencies', '🛠️ Area-AppHost']
+
+  # Maintain dependencies for npm
+  - package-ecosystem: 'npm'
+    directory: '/src/WebClient'
+    schedule:
+      interval: 'monthly'
+    labels: ['📦 Issue-Dependencies', '🌐 Area-WebApp']
+
+    # Maintain dependencies for GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels: ['📦 Issue-Dependencies', '♾️ Area-Workflow']
