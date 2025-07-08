@@ -5,6 +5,7 @@ import { ChangeEvent } from 'react';
 import {
   Caption1,
   CardFooter,
+  Divider,
   Switch,
   SwitchOnChangeData,
   makeStyles,
@@ -19,9 +20,14 @@ const useStyles = makeStyles({
     display: 'flex',
     '@media screen and (max-width: 576px)': {
       flexDirection: 'column',
+      rowGap: tokens.spacingVerticalS,
     },
     justifyItems: 'center',
     padding: `${tokens.spacingVerticalNone} ${tokens.spacingHorizontalXL} ${tokens.spacingVerticalXL}`,
+  },
+  divider: {
+    flex: '0 1 auto',
+    margin: `${tokens.spacingVerticalXXL} ${tokens.spacingHorizontalNone} ${tokens.spacingVerticalXXL}`,
   },
   switch: {
     marginTop: 'auto',
@@ -29,9 +35,8 @@ const useStyles = makeStyles({
     '@media screen and (max-width: 576px)': {
       marginLeft: 'auto',
       marginRight: 'auto',
-      padding: `${tokens.spacingVerticalSNudge} ${tokens.spacingHorizontalL} ${tokens.spacingVerticalNone}`,
+      padding: `${tokens.spacingVerticalNone} ${tokens.spacingHorizontalL} ${tokens.spacingVerticalNone}`,
     },
-    padding: `${tokens.spacingVerticalNone} ${tokens.spacingHorizontalM}`,
   },
   copyright: {
     marginTop: 'auto',
@@ -39,7 +44,7 @@ const useStyles = makeStyles({
     marginLeft: 'auto',
     '@media screen and (max-width: 576px)': {
       marginRight: 'auto',
-      padding: `${tokens.spacingVerticalSNudge} ${tokens.spacingHorizontalL} ${tokens.spacingVerticalNone}`,
+      padding: `${tokens.spacingVerticalMNudge} ${tokens.spacingHorizontalL} ${tokens.spacingVerticalNone}`,
     },
     flexWrap: 'wrap',
     padding: `${tokens.spacingVerticalNone} ${tokens.spacingHorizontalL}`,
@@ -60,18 +65,22 @@ export default function Footer() {
   };
 
   return (
-    <CardFooter className={styles.footer}>
-      <Socials />
-      <Switch
-        checked={isDark}
-        onChange={handleDarkModeToggled}
-        label={isDark ? 'Dark Mode' : 'Light Mode'}
-        className={styles.switch}
-      />
+    <>
+      <Divider appearance="subtle" inset className={styles.divider} />
 
-      <Caption1 as="p" align="end" block className={styles.copyright}>
-        © Victor Frye {_today.getFullYear()}
-      </Caption1>
-    </CardFooter>
+      <CardFooter className={styles.footer}>
+        <Socials />
+        <Switch
+          checked={isDark}
+          onChange={handleDarkModeToggled}
+          label={isDark ? 'Dark Mode' : 'Light Mode'}
+          className={styles.switch}
+        />
+
+        <Caption1 as="span" align="end" block className={styles.copyright}>
+          © Victor Frye {_today.getFullYear()}
+        </Caption1>
+      </CardFooter>
+    </>
   );
 }

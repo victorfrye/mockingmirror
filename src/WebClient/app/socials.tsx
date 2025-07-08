@@ -5,6 +5,7 @@ import { JSX, useCallback } from 'react';
 import { Button, Image, makeStyles, tokens } from '@fluentui/react-components';
 
 import { useDarkMode } from '@mockingmirror/theme';
+import { PersonFilled } from '@fluentui/react-icons';
 
 interface Social {
   href: string;
@@ -21,13 +22,8 @@ const useStyles = makeStyles({
     alignItems: 'center',
     gap: tokens.spacingVerticalSNudge,
   },
-  neutral: {
-    ':hover': {
-      backgroundColor: tokens.colorNeutralBackground4Hover,
-    },
-    ':hover:active': {
-      backgroundColor: tokens.colorNeutralBackground4Pressed,
-    },
+  icon: {
+    color: tokens.colorNeutralForeground1,
   },
 });
 
@@ -38,8 +34,11 @@ export default function Socials() {
   const getSocials = useCallback((): Social[] => {
     return [
       {
+        href: 'https://victorfrye.com',
+        image: <PersonFilled className={styles.icon} height={20} width={20} />,
+      },
+      {
         href: 'https://github.com/victorfrye/mockingmirror',
-        styles: styles.neutral,
         image: (
           <Image
             src={isDark ? '/images/github.svg' : '/images/github_dark.svg'}

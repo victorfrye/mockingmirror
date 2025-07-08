@@ -27,6 +27,12 @@ const useStyles = makeStyles({
     width: 'auto',
     height: 'auto',
   },
+  spinner: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '50vh',
+  },
 });
 
 export interface RoastRequest {
@@ -102,7 +108,7 @@ export default function RoastDisplay({ image }: Readonly<RoastDisplayProps>) {
   return (
     <Card className={styles.card} appearance="filled-alternative">
       {loading ? (
-        <Spinner label={'Roasting...'} size="extra-large" />
+        <Spinner label={'Roasting...'} size="extra-large" className={styles.spinner} />
       ) : (
         <>
           <Image

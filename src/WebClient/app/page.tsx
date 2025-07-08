@@ -11,7 +11,8 @@ const useStyles = makeStyles({
   main: {
     display: 'flex',
     gap: tokens.spacingVerticalXL,
-    margin: `${tokens.spacingVerticalXL} ${tokens.spacingVerticalNone}`,
+    margin: `auto ${tokens.spacingHorizontalL}`,
+    justifyItems: 'center',
     flexDirection: 'column',
     '@media screen and (min-width: 900px)': {
       flexDirection: 'row',
