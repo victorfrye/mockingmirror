@@ -3,9 +3,9 @@
 import { JSX, useCallback } from 'react';
 
 import { Button, Image, makeStyles, tokens } from '@fluentui/react-components';
+import { PersonFilled } from '@fluentui/react-icons';
 
 import { useDarkMode } from '@mockingmirror/theme';
-import { PersonFilled } from '@fluentui/react-icons';
 
 interface Social {
   href: string;

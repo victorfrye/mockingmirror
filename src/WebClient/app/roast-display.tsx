@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import useFetch from './use-fetch';
 import {
   Body1,
   Card,
@@ -13,6 +12,7 @@ import {
 } from '@fluentui/react-components';
 
 import { Roast } from '@mockingmirror/types';
+import useFetch from '@mockingmirror/use-fetch';
 
 const useStyles = makeStyles({
   card: {
@@ -108,7 +108,11 @@ export default function RoastDisplay({ image }: Readonly<RoastDisplayProps>) {
   return (
     <Card className={styles.card} appearance="filled-alternative">
       {loading ? (
-        <Spinner label={'Roasting...'} size="extra-large" className={styles.spinner} />
+        <Spinner
+          label={'Roasting...'}
+          size="extra-large"
+          className={styles.spinner}
+        />
       ) : (
         <>
           <Image
