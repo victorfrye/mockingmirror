@@ -11,6 +11,8 @@ import {
 } from '@fluentui/react-components';
 import { Camera16Regular } from '@fluentui/react-icons';
 
+import MirrorText from '@mockingmirror/mirror/text';
+
 const useStyles = makeStyles({
   card: {
     display: 'flex',
@@ -120,7 +122,7 @@ export default function VideoCamera({
             onClick={takeSnapshot}
             appearance="primary"
           >
-            Capture Image
+            {MirrorText.camera.button}
           </Button>
         }
       ></CardFooter>

@@ -5,7 +5,7 @@ namespace VictorFrye.MockingMirror.WebApi.Roasting;
 /// </summary>
 public static class RoastEndpoints
 {
-    internal const string BasePath = "/roasts";
+    internal const string BasePath = "/api/roasts";
 
     /// <summary>
     /// Register endpoints onto the current application for generating roasts using AI.

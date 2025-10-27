@@ -10,13 +10,13 @@ This version of the project has been modified for public use and maintenance by 
 
 The solution for this hackathon includes:
 
-🌐 A React web client application for user interactivity and presentation.
+🌐 A Next.js web client application for user interactivity and presentation.
 
 💜 An ASP.NET Core Web API that processes an image and returns text and audio responses.
 
 ✨ Azure AI services for generative image-to-text and text-to-speech synthesis.
 
-🛠️ .NET Aspire for orchestration of the local development environment.
+🛠️ Aspire for orchestration of the local development environment.
 
 ## Table of Contents
 
@@ -49,11 +49,11 @@ To run this project, you will need to have the following software installed on y
 
 *WARNING: Additional changes may be required if using an alternative to Docker Desktop.*
 
-### .NET Aspire
+### Aspire
 
-This project uses .NET Aspire to orchestrate the local development environment. This simplifies the process of running the frontend and backend services together.
+This project uses Aspire to orchestrate the local development environment. This simplifies the process of running the frontend and backend services together.
 
-For more information on or troubleshooting .NET Aspire, see the [Aspire documentation](https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview).
+For more information on or troubleshooting Aspire, see the [Aspire documentation](https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview).
 
 ### Set up Azure AI services
 

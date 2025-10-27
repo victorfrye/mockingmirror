@@ -2,9 +2,9 @@ import { ReactNode } from 'react';
 
 import { Metadata } from 'next';
 
-import Frame from '@mockingmirror/frame';
 import '@mockingmirror/globals.css';
-import { DarkModeProvider, ThemeProvider } from '@mockingmirror/theme';
+import ProviderTree from '@mockingmirror/provider-tree';
+import { Shell } from '@mockingmirror/shell';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mockingmirror.com'),
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     'reflection',
     'roast',
   ],
-  icons: ['images/clown.svg'],
+  icons: ['assets/clown.svg'],
   authors: {
     name: 'Victor Frye',
     url: 'https://victorfrye.com/',
@@ -43,11 +43,9 @@ export const RootLayout = ({
     <html lang="en">
       <body>
         <div id="root">
-          <DarkModeProvider>
-            <ThemeProvider>
-              <Frame>{children}</Frame>
-            </ThemeProvider>
-          </DarkModeProvider>
+          <ProviderTree>
+            <Shell>{children}</Shell>
+          </ProviderTree>
         </div>
       </body>
     </html>

@@ -17,6 +17,9 @@ namespace VictorFrye.MockingMirror.Extensions.ServiceDefaults;
 
 public static class Extensions
 {
+    private const string HealthEndpointPath = "/health";
+    private const string AlivenessEndpointPath = "/alive";
+
     public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.ConfigureOpenTelemetry();
@@ -49,7 +52,11 @@ public static class Extensions
                     .AddRuntimeInstrumentation())
             .WithTracing(tracing =>
                 tracing.AddSource(builder.Environment.ApplicationName)
-                    .AddAspNetCoreInstrumentation()
+                    .AddAspNetCoreInstrumentation(tracing =>
+                        tracing.Filter = context =>
+                            !context.Request.Path.StartsWithSegments(HealthEndpointPath)
+                            && !context.Request.Path.StartsWithSegments(AlivenessEndpointPath)
+                    )
                     .AddHttpClientInstrumentation());
 
         builder.AddOpenTelemetryExporters();
@@ -79,12 +86,12 @@ public static class Extensions
 
     public static WebApplication MapDefaultEndpoints(this WebApplication app)
     {
-        app.MapHealthChecks("/health", new HealthCheckOptions
+        app.MapHealthChecks(HealthEndpointPath, new HealthCheckOptions
         {
             ResponseWriter = WriteHealthResponse,
         });
 
-        app.MapHealthChecks("/alive", new HealthCheckOptions
+        app.MapHealthChecks(AlivenessEndpointPath, new HealthCheckOptions
         {
             ResponseWriter = WriteHealthResponse,
             Predicate = r => r.Tags.Contains("live")

@@ -25,7 +25,7 @@ const reducer = <T>(
     case 'FAILURE':
       return { ...state, loading: false, error: action.payload };
     default:
-      throw new Error();
+      throw new Error('Cannot reduce unknown action: ' + action);
   }
 };
 

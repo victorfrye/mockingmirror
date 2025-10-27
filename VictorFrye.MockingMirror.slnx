@@ -12,9 +12,6 @@
   <Project Path="src/AppHost/AppHost.csproj" />
   <Project Path="src/ServiceDefaults/ServiceDefaults.csproj" />
   <Project Path="src/WebApi/WebApi.csproj" />
-  <Project Path="src/WebClient/WebClient.esproj">
-    <Build />
-    <Deploy />
-  </Project>
+  <Project Path="src/WebClient/WebClient.esproj" />
   <Project Path="test/WebApi/WebApi.Tests.csproj" />
 </Solution>
